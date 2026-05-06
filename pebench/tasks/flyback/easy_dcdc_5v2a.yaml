@@ -1,0 +1,78 @@
+task_id: easy_dcdc_5v2a
+natural_language_spec: Design an isolated flyback converter from 18-36 VDC input to
+  5 V / 2 A output. Target at least 81.0% efficiency, keep output ripple below 50
+  mV, and Maintain practical output filtering for a low-voltage high-current rail.
+difficulty_tier: easy
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: public_dev
+  task_family: dcdc_low_voltage
+  source: pebench_v2_calibrated
+structured_spec:
+  input_range_volts:
+    min: 18
+    max: 36
+    domain: dc
+  output:
+    voltage_v: 5.0
+    current_a: 2.0
+    power_w: 10.0
+  switching_frequency_khz:
+    min: 72
+    max: 125
+  targets:
+    efficiency_percent: 81.0
+    ripple_mv: 50.0
+  constraints:
+    max_duty_cycle: 0.45
+    max_primary_peak_current_a: 2.8
+    max_mosfet_voltage_v: 180.0
+    max_diode_reverse_voltage_v: 82.0
+    max_flux_density_mt: 230.0
+  preferences:
+    cost_priority: high
+    volume_priority: medium
+    allowed_controller_families:
+    - qr
+    - pwm
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 4.6
+  magnetizing_inductance_uh: 229.5
+  switching_frequency_khz: 91.1
+  duty_cycle_max: 0.42
+  primary_peak_current_a: 2.02
+  selected_components:
+    controller: NCP1342
+    mosfet: STF7N65M2
+    diode: MBR20100CT
+    output_capacitor: EEU-FR1E221
+    core: EFD20_3C95
+  expected_metrics:
+    efficiency_percent: 86.2
+    ripple_mv: 32.5
+    mosfet_voltage_stress_v: 144.0
+    diode_reverse_voltage_v: 65.6
+    flux_density_mt: 177.1
+    startup_success: true
+  cost_proxy_usd: 3.65
+known_failure_modes:
+- Spec Parsing Failure
+- Ripple / Regulation Miss
+- Optimistic but Unrealistic Claim

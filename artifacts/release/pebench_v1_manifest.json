@@ -1,0 +1,109 @@
+{
+  "generated_at_utc": "2026-05-06T00:00:00+00:00",
+  "license": {
+    "software": "MIT",
+    "tasks_docs_and_generated_artifacts": "CC BY 4.0",
+    "third_party_resources": "governed by their own terms"
+  },
+  "non_use": {
+    "automated_procurement": false,
+    "hardware_certification": false,
+    "production_signoff": false,
+    "requires_qualified_engineer_review_for_real_hardware": true
+  },
+  "paper_alignment": {
+    "evidence_level": "frozen manuscript summary records",
+    "expected_task_total": 78,
+    "experiments_included": true,
+    "families": [
+      "Buck",
+      "Boost",
+      "Buck-Boost",
+      "Flyback",
+      "Three-phase inverter"
+    ],
+    "note": "This manifest covers the reviewer-facing code, task artifact, and summary-level frozen manuscript records. Full raw API reruns can replace the evidence bundle without changing the task contract.",
+    "primary_metric": "verifiable task success rate (VTSR)",
+    "task_total": 78
+  },
+  "project": {
+    "legacy_package_shim": "flybackbench",
+    "name": "PE-Bench",
+    "python_package": "pebench",
+    "role": "benchmark and evaluator artifact for AI-assisted power-electronics design"
+  },
+  "release_files": {
+    "candidate_schema": "artifacts/schema/candidate.schema.json",
+    "checksums": "artifacts/release/checksums.sha256",
+    "croissant_metadata": "croissant_metadata.json",
+    "dataset_summary": "artifacts/dataset/dataset_summary.json",
+    "evidence_matrix": "artifacts/evidence/EVIDENCE_MATRIX.md",
+    "frozen_evidence_manifest": "artifacts/evidence/frozen_v1/manifest.json",
+    "manifest": "artifacts/release/pebench_v1_manifest.json",
+    "paper_alignment": "artifacts/release/paper_alignment.md",
+    "reproduced_tables_manifest": "artifacts/reproduced_tables/manifest.json",
+    "result_schema": "artifacts/schema/result.schema.json",
+    "reviewer_smoke_test": "artifacts/quickstart/REVIEWER_SMOKE_TEST.md",
+    "task_inventory_csv": "artifacts/release/task_inventory.csv",
+    "task_inventory_markdown": "artifacts/release/task_inventory.md"
+  },
+  "release_version": "pebench-v1.0-78task",
+  "reviewer_commands": [
+    "python scripts/reviewer_smoke_test.py",
+    "python scripts/build_release_artifacts.py --check",
+    "python scripts/build_dataset_artifacts.py --check",
+    "python scripts/build_paper_tables.py --evidence artifacts/evidence/frozen_v1 --check",
+    "python scripts/validate_public_artifact.py",
+    "python scripts/validate_tasks.py",
+    "python scripts/validate_topology_full_tasks.py",
+    "python scripts/validate_inverter_tasks.py",
+    "python scripts/validate_reference_designs.py",
+    "python scripts/reproduce_paper_tables.py --evidence artifacts/evidence/frozen_v1"
+  ],
+  "source_layout": {
+    "artifact_output": "artifacts/",
+    "baseline_adapters": "pebench/baselines/",
+    "catalogs": "assets/catalogs/",
+    "docs": "docs/",
+    "evaluator": "pebench/evaluator/",
+    "scripts": "scripts/",
+    "tasks": {
+      "flyback": "pebench/tasks/flyback",
+      "three_phase_inverter": "pebench/tasks/inverter",
+      "topology_full": "pebench/tasks/topology_full"
+    }
+  },
+  "task_counts": {
+    "by_bank": {
+      "flyback": 30,
+      "three_phase_inverter": 12,
+      "topology_full": 36
+    },
+    "by_difficulty": {
+      "boundary": 7,
+      "easy": 21,
+      "hard": 15,
+      "medium": 26,
+      "stress": 9
+    },
+    "by_split": {
+      "extension": 12,
+      "private_holdout": 6,
+      "public_dev": 60
+    },
+    "by_topology": {
+      "boost": 12,
+      "buck": 12,
+      "buck_boost": 12,
+      "flyback": 30,
+      "three_phase_inverter": 12
+    },
+    "expected_by_topology": {
+      "boost": 12,
+      "buck": 12,
+      "buck_boost": 12,
+      "flyback": 30,
+      "three_phase_inverter": 12
+    }
+  }
+}

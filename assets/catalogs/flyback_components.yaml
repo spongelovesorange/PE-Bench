@@ -1,0 +1,128 @@
+version: pebench-flyback-v1
+mosfets:
+  - part_number: STF7N65M2
+    category: mosfet
+    voltage_rating_v: 650
+    current_rating_a: 5.5
+    power_rating_w: 70.0
+    temperature_rating_c: 150
+    rds_on_mohm: 210.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 1.15
+    availability: in_stock
+  - part_number: IPD60R380P7
+    category: mosfet
+    voltage_rating_v: 700
+    current_rating_a: 8.3
+    power_rating_w: 90.0
+    temperature_rating_c: 150
+    rds_on_mohm: 380.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 1.62
+    availability: in_stock
+diodes:
+  - part_number: MBR20100CT
+    category: diode
+    voltage_rating_v: 100
+    current_rating_a: 10.0
+    power_rating_w: 30.0
+    temperature_rating_c: 150
+    rds_on_mohm: 0.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 0.84
+    availability: in_stock
+  - part_number: STPS8H100
+    category: diode
+    voltage_rating_v: 100
+    current_rating_a: 8.0
+    power_rating_w: 20.0
+    temperature_rating_c: 150
+    rds_on_mohm: 0.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 0.72
+    availability: in_stock
+inductors:
+  - part_number: GENERIC_FLYBACK_LP
+    category: inductor
+    voltage_rating_v: 0.0
+    current_rating_a: 2.5
+    power_rating_w: 0.0
+    temperature_rating_c: 125
+    rds_on_mohm: 0.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 0.45
+    availability: limited
+capacitors:
+  - part_number: EEU-FR1E221
+    category: capacitor
+    voltage_rating_v: 25
+    current_rating_a: 0.0
+    power_rating_w: 0.0
+    temperature_rating_c: 105
+    rds_on_mohm: 0.0
+    esr_mohm: 120.0
+    ripple_current_a: 1.35
+    cost_usd: 0.26
+    availability: in_stock
+  - part_number: EEU-FR1V471
+    category: capacitor
+    voltage_rating_v: 35
+    current_rating_a: 0.0
+    power_rating_w: 0.0
+    temperature_rating_c: 105
+    rds_on_mohm: 0.0
+    esr_mohm: 90.0
+    ripple_current_a: 2.0
+    cost_usd: 0.34
+    availability: in_stock
+controllers:
+  - part_number: UCC28740
+    category: controller
+    voltage_rating_v: 700
+    current_rating_a: 0.0
+    power_rating_w: 0.0
+    temperature_rating_c: 125
+    rds_on_mohm: 0.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 0.62
+    availability: in_stock
+  - part_number: NCP1342
+    category: controller
+    voltage_rating_v: 700
+    current_rating_a: 0.0
+    power_rating_w: 0.0
+    temperature_rating_c: 125
+    rds_on_mohm: 0.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 0.58
+    availability: in_stock
+transformers:
+  - part_number: EFD20_3C95
+    category: transformer
+    voltage_rating_v: 0.0
+    current_rating_a: 0.0
+    power_rating_w: 18.0
+    temperature_rating_c: 130
+    rds_on_mohm: 0.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 0.82
+    availability: in_stock
+  - part_number: EFD25_3C95
+    category: transformer
+    voltage_rating_v: 0.0
+    current_rating_a: 0.0
+    power_rating_w: 40.0
+    temperature_rating_c: 130
+    rds_on_mohm: 0.0
+    esr_mohm: 0.0
+    ripple_current_a: 0.0
+    cost_usd: 1.08
+    availability: in_stock

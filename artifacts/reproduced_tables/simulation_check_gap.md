@@ -1,0 +1,14 @@
+# Simulation Check Gap
+
+Gap between simulator-executable candidates and full PE-Bench checks.
+
+Source: `artifacts/evidence/frozen_v1/simulation_check_gap.csv`
+
+| method | format_valid_percent | simulator_executable_percent | simulator_pass_percent | full_check_vtsr | gap_percent | top_failure_in_gap | evidence_level |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| LLM-only | 97.5 | 58.2 | 43.5 | 0.184 | 25.1 | Invalid/Unsafe BOM | frozen_manuscript_summary_record |
+| LLM+Tools | 98.8 | 64.5 | 48.0 | 0.205 | 27.5 | Unrealistic Reported value | frozen_manuscript_summary_record |
+| Generic MAS | 99.0 | 68.1 | 52.4 | 0.235 | 28.9 | Stress Violation | frozen_manuscript_summary_record |
+| PE-GPT-style | 100.0 | 75.0 | 58.5 | 0.252 | 33.3 | Unrealistic Reported value | frozen_manuscript_summary_record |
+| Strong Baseline | 100.0 | 94.5 | 74.2 | 0.684 | 5.8 | Human Review Required | frozen_manuscript_summary_record |
+

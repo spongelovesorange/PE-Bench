@@ -1,0 +1,44 @@
+version: v0.1
+controllers:
+  - part_id: UCC28740
+    family: qr
+    max_input_v: 700
+    cost_usd: 0.62
+  - part_id: NCP1342
+    family: qr
+    max_input_v: 700
+    cost_usd: 0.58
+mosfets:
+  - part_id: STF7N65M2
+    voltage_rating_v: 650
+    current_rating_a: 5.5
+    cost_usd: 1.15
+  - part_id: IPD60R380P7
+    voltage_rating_v: 700
+    current_rating_a: 8.3
+    cost_usd: 1.62
+diodes:
+  - part_id: MBR20100CT
+    voltage_rating_v: 100
+    current_rating_a: 10.0
+    cost_usd: 0.84
+  - part_id: STPS8H100
+    voltage_rating_v: 100
+    current_rating_a: 8.0
+    cost_usd: 0.72
+output_capacitors:
+  - part_id: EEU-FR1E221
+    voltage_rating_v: 25
+    ripple_current_a: 1.35
+    cost_usd: 0.26
+  - part_id: EEU-FR1V471
+    voltage_rating_v: 35
+    ripple_current_a: 2.0
+    cost_usd: 0.34
+cores:
+  - part_id: EFD20_3C95
+    max_power_w: 18
+    cost_usd: 0.82
+  - part_id: EFD25_3C95
+    max_power_w: 40
+    cost_usd: 1.08

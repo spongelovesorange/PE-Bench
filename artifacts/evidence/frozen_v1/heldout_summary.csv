@@ -1,0 +1,6 @@
+method,public_dev_vtsr,heldout_vtsr,absolute_drop,heldout_unsupported_values_percent,heldout_tasks,evidence_level
+LLM-only,0.184,0.158,-0.026,88.5,24,frozen_manuscript_summary_record
+LLM+Tools,0.205,0.182,-0.023,72.1,24,frozen_manuscript_summary_record
+Generic Two-Role MAS,0.235,0.205,-0.03,62.4,24,frozen_manuscript_summary_record
+PE-GPT-style,0.252,0.218,-0.034,59.0,24,frozen_manuscript_summary_record
+Strong Baseline,0.684,0.652,-0.032,9.5,24,frozen_manuscript_summary_record

@@ -1,0 +1,80 @@
+task_id: hard_dcdc_24v1p8a_eff89
+natural_language_spec: Design an isolated flyback converter from 36-72 VDC input to
+  24 V / 1.8 A output. Target at least 89.0% efficiency, keep output ripple below
+  40 mV, and Efficiency is the main differentiator, but the design still needs clean
+  derating.
+difficulty_tier: hard
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: public_dev
+  task_family: dcdc_high_efficiency
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 36
+    max: 72
+    domain: dc
+  output:
+    voltage_v: 24.0
+    current_a: 1.8
+    power_w: 43.2
+  switching_frequency_khz:
+    min: 80
+    max: 130
+  targets:
+    efficiency_percent: 89.0
+    ripple_mv: 40.0
+  constraints:
+    max_duty_cycle: 0.4
+    max_primary_peak_current_a: 6.1
+    max_mosfet_voltage_v: 302.4
+    max_diode_reverse_voltage_v: 96.0
+    max_flux_density_mt: 210.0
+  preferences:
+    cost_priority: medium
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+    - pwm
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 3.5
+  magnetizing_inductance_uh: 180.0
+  switching_frequency_khz: 107.5
+  duty_cycle_max: 0.375
+  primary_peak_current_a: 5.12
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: MBR20100CT
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 89.5
+    ripple_mv: 32.0
+    mosfet_voltage_stress_v: 266.11
+    diode_reverse_voltage_v: 84.48
+    flux_density_mt: 178.5
+    startup_success: true
+  cost_proxy_usd: 4.46
+known_failure_modes:
+- Infeasible Theory Failure
+- Simulation Execution Failure
+- Efficiency Miss
+- Stress Violation / Escalation Required

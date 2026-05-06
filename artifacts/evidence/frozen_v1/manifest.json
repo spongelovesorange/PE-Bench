@@ -1,0 +1,51 @@
+{
+  "created_for": "anonymous_review_artifact",
+  "evidence_kind": "frozen_manuscript_summary_records",
+  "families": [
+    "Buck",
+    "Boost",
+    "Buck-Boost",
+    "Flyback",
+    "Three-phase inverter"
+  ],
+  "files": [
+    "ablation_summary.csv",
+    "backbone_robustness.csv",
+    "heldout_summary.csv",
+    "inverter_extension_summary.csv",
+    "leaderboard_summary.csv",
+    "retry_budget_summary.csv",
+    "simulation_check_gap.csv",
+    "suite_summary.json",
+    "task_accounting.csv",
+    "topology_slice_summary.csv",
+    "validation_summary.csv"
+  ],
+  "limitations": [
+    "Summary-level frozen manuscript records, not raw API execution logs.",
+    "No API credentials or local server paths are included.",
+    "Use scripts/reproduce_paper_tables.py for no-API paper-table checks."
+  ],
+  "primary_metric": "VTSR",
+  "raw_log_status": "not included; replace this summary bundle with sanitized raw run records after full rerun if available",
+  "raw_logs_included": false,
+  "release_version": "pebench-v1.0-78task",
+  "source_records": [
+    "paper_pdf",
+    "main_tex",
+    "internal_experiment_notes_pdf"
+  ],
+  "task_total": 78,
+  "verified_tables": [
+    "task_accounting",
+    "leaderboard",
+    "simulation_check_gap",
+    "ablation",
+    "backbone_robustness",
+    "topology_slice",
+    "heldout",
+    "retry_budget",
+    "validation",
+    "inverter_extension"
+  ]
+}

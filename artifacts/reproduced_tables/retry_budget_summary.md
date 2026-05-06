@@ -1,0 +1,13 @@
+# Retry Budget Summary
+
+Pass-rate sensitivity to retry budget.
+
+Source: `artifacts/evidence/frozen_v1/retry_budget_summary.csv`
+
+| method | k1_vtsr | k2_vtsr | k3_vtsr | k5_vtsr | k10_vtsr | regression_percent | evidence_level |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| LLM+Tools | 0.125 | 0.168 | 0.19 | 0.205 | 0.205 | 68.4 | frozen_manuscript_summary_record |
+| Single-Agent+Retry | 0.13 | 0.185 | 0.21 | 0.218 | 0.222 | 65.2 | frozen_manuscript_summary_record |
+| Generic Two-Role MAS | 0.145 | 0.202 | 0.228 | 0.235 | 0.24 | 58.5 | frozen_manuscript_summary_record |
+| Strong Baseline | 0.42 | 0.615 | 0.668 | 0.684 | 0.688 | 15.2 | frozen_manuscript_summary_record |
+

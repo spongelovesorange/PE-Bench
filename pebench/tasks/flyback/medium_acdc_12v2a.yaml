@@ -1,0 +1,77 @@
+task_id: medium_acdc_12v2a
+natural_language_spec: Design an isolated flyback converter from 85-265 VAC input
+  to 12 V / 2 A output. Target at least 86.5% efficiency, keep output ripple below
+  70 mV, and Balance efficiency against practical BOM cost.
+difficulty_tier: medium
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: public_dev
+  task_family: acdc_general
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 85
+    max: 265
+    domain: ac
+  output:
+    voltage_v: 12.0
+    current_a: 2.0
+    power_w: 24.0
+  switching_frequency_khz:
+    min: 65
+    max: 120
+  targets:
+    efficiency_percent: 86.5
+    ripple_mv: 70.0
+  constraints:
+    max_duty_cycle: 0.43
+    max_primary_peak_current_a: 3.8
+    max_mosfet_voltage_v: 590.0
+    max_diode_reverse_voltage_v: 82.0
+    max_flux_density_mt: 220.0
+  preferences:
+    cost_priority: medium
+    volume_priority: medium
+    allowed_controller_families:
+    - qr
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 8.5
+  magnetizing_inductance_uh: 278.0
+  switching_frequency_khz: 88.1
+  duty_cycle_max: 0.4
+  primary_peak_current_a: 2.96
+  selected_components:
+    controller: UCC28740
+    mosfet: IPD60R380P7
+    diode: MBR20100CT
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 87.4
+    ripple_mv: 50.4
+    mosfet_voltage_stress_v: 495.6
+    diode_reverse_voltage_v: 68.88
+    flux_density_mt: 178.2
+    startup_success: true
+  cost_proxy_usd: 4.5
+known_failure_modes:
+- Infeasible Theory Failure
+- Efficiency Miss
+- Invalid or Unsafe BOM

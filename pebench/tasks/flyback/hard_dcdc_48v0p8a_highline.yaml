@@ -1,0 +1,80 @@
+task_id: hard_dcdc_48v0p8a_highline
+natural_language_spec: Design an isolated flyback converter from 72-120 VDC input
+  to 48 V / 0.8 A output. Target at least 88.7% efficiency, keep output ripple below
+  55 mV, and The high bus voltage makes reflected voltage planning and primary stress
+  harder.
+difficulty_tier: hard
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: private_holdout
+  task_family: dcdc_highline
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 72
+    max: 120
+    domain: dc
+  output:
+    voltage_v: 48.0
+    current_a: 0.8
+    power_w: 38.4
+  switching_frequency_khz:
+    min: 82
+    max: 135
+  targets:
+    efficiency_percent: 88.7
+    ripple_mv: 55.0
+  constraints:
+    max_duty_cycle: 0.4
+    max_primary_peak_current_a: 5.6
+    max_mosfet_voltage_v: 320.0
+    max_diode_reverse_voltage_v: 144.0
+    max_flux_density_mt: 210.0
+  preferences:
+    cost_priority: medium
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+    - pwm
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 2.7
+  magnetizing_inductance_uh: 180.0
+  switching_frequency_khz: 111.2
+  duty_cycle_max: 0.375
+  primary_peak_current_a: 4.7
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: STPS8H100
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 89.2
+    ripple_mv: 44.0
+    mosfet_voltage_stress_v: 281.6
+    diode_reverse_voltage_v: 126.72
+    flux_density_mt: 178.5
+    startup_success: true
+  cost_proxy_usd: 4.34
+known_failure_modes:
+- Infeasible Theory Failure
+- Simulation Execution Failure
+- Efficiency Miss
+- Stress Violation / Escalation Required

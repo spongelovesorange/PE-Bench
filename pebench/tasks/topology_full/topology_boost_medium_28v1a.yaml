@@ -1,0 +1,92 @@
+schema_version: pebench_topology_full_v1.0
+task_id: topology_boost_medium_28v1a
+topology: boost
+difficulty_tier: medium
+natural_language_spec: Design a non-isolated boost converter from 10-18 VDC input
+  to 28 V / 1.0 A output. Target at least 88.0% efficiency, keep output ripple below
+  55 mV, and maintain conservative switch, diode, inductor, and claim-consistency
+  margins for a industrial sensor rail.
+benchmark_meta:
+  track: nonisolated_boost_design
+  split: public_dev
+  task_family: nonisolated_dcdc
+  source: pebench_multitopology_v1
+structured_spec:
+  input_range_volts:
+    min: 10
+    max: 18
+    domain: dc
+  output:
+    voltage_v: 28.0
+    current_a: 1.0
+    power_w: 28.0
+    polarity: positive
+  switching_frequency_khz:
+    min: 300
+    max: 650
+  targets:
+    efficiency_percent: 88.0
+    ripple_mv: 55.0
+  constraints:
+    max_duty_cycle: 0.68
+    max_inductor_peak_current_a: 3.82
+    max_mosfet_voltage_v: 42.29
+    max_diode_reverse_voltage_v: 40.25
+    max_inductor_ripple_percent: 45.0
+    max_output_cap_ripple_current_a: 0.8
+  preferences:
+    cost_priority: medium
+    volume_priority: low
+    control_mode: current_mode_preferred
+  component_catalog_version: pebench-topology-full-v1.0
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: topology_theory
+  weight: 18
+- name: component_grounding
+  weight: 18
+- name: efficiency_target
+  weight: 14
+- name: ripple_target
+  weight: 14
+- name: stress_margin
+  weight: 16
+- name: claim_consistency
+  weight: 10
+closure_gates:
+- schema_closure
+- topology_theory_closure
+- component_grounding
+- stress_margin
+- claim_consistency
+reference_design:
+  topology: boost
+  duty_cycle_nominal: 0.5
+  inductance_uh: 20.26
+  output_capacitance_uf: 33.0
+  switching_frequency_khz: 475.0
+  inductor_ripple_current_a: 0.727
+  switch_peak_current_a: 2.636
+  selected_components:
+    controller: LM5155
+    switch: BSC340N08NS3
+    diode: STPS10H100
+    output_capacitor: EEU-FR1V471
+    inductor: SRP1040-220M
+  expected_metrics:
+    efficiency_percent: 89.1
+    ripple_mv: 31.9
+    mosfet_voltage_stress_v: 33.04
+    diode_reverse_voltage_v: 32.2
+    inductor_peak_current_a: 2.636
+    startup_success: true
+  cost_proxy_usd: 3.89
+known_failure_modes:
+- Spec Parsing Failure
+- Infeasible Theory Failure
+- Invalid or Unsafe BOM
+- Efficiency Miss
+- Ripple / Regulation Miss
+- Stress Violation / Escalation Required
+- Optimistic but Unrealistic Claim

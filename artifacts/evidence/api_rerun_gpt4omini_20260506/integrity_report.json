@@ -1,0 +1,21 @@
+{
+  "api_key_recorded": false,
+  "complete": true,
+  "completed_78task_jobs": 33,
+  "created_at_utc": "2026-05-06T15:48:44+00:00",
+  "done_marker_count": 33,
+  "evidence_level": "frozen_actual_api_run_records",
+  "expected_job_count": 33,
+  "expected_task_results_if_complete": 2574,
+  "failed_marker_count": 0,
+  "notes": [
+    "Raw candidate and task-result JSON files remain under raw_records/.",
+    "This freeze step records summaries and checksums; it does not store API credentials.",
+    "If runner_state is not completed, rerun this script after the API run finishes."
+  ],
+  "observed_job_count": 33,
+  "observed_suite_count": 99,
+  "run_name": "final78_vveai_20260506_032918",
+  "runner_state": "completed",
+  "task_result_count": 2574
+}

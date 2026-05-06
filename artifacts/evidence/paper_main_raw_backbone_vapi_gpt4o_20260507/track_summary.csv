@@ -1,0 +1,7 @@
+baseline_name,model_name,variant,track,seed_count,task_records,vtsr_mean,mean_score,evidence_level
+direct_prompting,gpt-4o,full,flyback,3,90,0.022222,78.618889,paper_main_raw_api_evidence
+direct_prompting,gpt-4o,full,three_phase_inverter,3,36,0.472222,97.706667,paper_main_raw_api_evidence
+direct_prompting,gpt-4o,full,topology_full,3,108,0.0,39.911204,paper_main_raw_api_evidence
+reference_agent,gpt-4o,full,flyback,3,90,0.355556,97.678556,paper_main_raw_api_evidence
+reference_agent,gpt-4o,full,three_phase_inverter,3,36,0.972222,99.611111,paper_main_raw_api_evidence
+reference_agent,gpt-4o,full,topology_full,3,108,0.805556,86.024537,paper_main_raw_api_evidence

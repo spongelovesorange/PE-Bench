@@ -1,0 +1,80 @@
+task_id: boundary_dcdc_12v3a_narrow_duty
+natural_language_spec: Design an isolated flyback converter from 36-60 VDC input to
+  12 V / 3 A output. Target at least 88.8% efficiency, keep output ripple below 32
+  mV, and The design is feasible only if duty cycle, current stress, and filter sizing
+  are handled carefully.
+difficulty_tier: boundary
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: public_dev
+  task_family: dcdc_boundary
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 36
+    max: 60
+    domain: dc
+  output:
+    voltage_v: 12.0
+    current_a: 3.0
+    power_w: 36.0
+  switching_frequency_khz:
+    min: 85
+    max: 135
+  targets:
+    efficiency_percent: 88.8
+    ripple_mv: 32.0
+  constraints:
+    max_duty_cycle: 0.39
+    max_primary_peak_current_a: 5.4
+    max_mosfet_voltage_v: 252.0
+    max_diode_reverse_voltage_v: 82.0
+    max_flux_density_mt: 208.0
+  preferences:
+    cost_priority: medium
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+    - pwm
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 4.4
+  magnetizing_inductance_uh: 198.2
+  switching_frequency_khz: 119.0
+  duty_cycle_max: 0.375
+  primary_peak_current_a: 4.86
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: MBR20100CT
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 89.05
+    ripple_mv: 27.52
+    mosfet_voltage_stress_v: 234.36
+    diode_reverse_voltage_v: 76.26
+    flux_density_mt: 187.2
+    startup_success: true
+  cost_proxy_usd: 4.46
+known_failure_modes:
+- Invalid or Unsafe BOM
+- Simulation Execution Failure
+- Optimistic but Unrealistic Claim
+- Stress Violation / Escalation Required

@@ -1,0 +1,211 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "sc:Dataset",
+  "codeRepository": "https://github.com/spongelovesorange/PE-Bench",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": {
+    "@type": "Organization",
+    "name": "Anonymous PE-Bench Authors"
+  },
+  "datePublished": "2026-05-06",
+  "description": "PE-Bench is a 78-task benchmark and evaluator artifact for AI-assisted power-electronics design across Buck, Boost, Buck-Boost, Flyback, and three-phase inverter tasks.",
+  "distribution": [
+    {
+      "@id": "task_records_jsonl",
+      "@type": "cr:FileObject",
+      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/dataset/task_records.jsonl",
+      "encodingFormat": "application/x-jsonlines",
+      "name": "task_records.jsonl",
+      "sha256": "9478bc1a0e11e9c661762653133057a5c7e55d192e882650ced7644dd82fd081"
+    },
+    {
+      "@id": "task_records_csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/dataset/task_records.csv",
+      "encodingFormat": "text/csv",
+      "name": "task_records.csv",
+      "sha256": "5c52cbcf68c6d6de3523adeb80685477970a065b7ede7b084124d1d95b81973b"
+    },
+    {
+      "@id": "task_inventory_csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/release/task_inventory.csv",
+      "encodingFormat": "text/csv",
+      "name": "task_inventory.csv",
+      "sha256": "718e90a608e0ac74a4f65561bf5565adec49faab9cdbb63442d47595e1f28290"
+    },
+    {
+      "@id": "candidate_schema_json",
+      "@type": "cr:FileObject",
+      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/schema/candidate.schema.json",
+      "encodingFormat": "application/schema+json",
+      "name": "candidate.schema.json",
+      "sha256": "e7e729ce69692e11625211441de328a7f0d34036d2b225b8ca0ff922964dc43d"
+    },
+    {
+      "@id": "result_schema_json",
+      "@type": "cr:FileObject",
+      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/schema/result.schema.json",
+      "encodingFormat": "application/schema+json",
+      "name": "result.schema.json",
+      "sha256": "451f435154ffcf601ea7414b56b5cc80c709ccd76e3d92ec927cb0d22144423a"
+    }
+  ],
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "name": "GitHub anonymous review artifact"
+  },
+  "isAccessibleForFree": true,
+  "keywords": [
+    "power electronics",
+    "benchmark",
+    "evaluation",
+    "LLM agents",
+    "converter design",
+    "reproducibility"
+  ],
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "name": "PE-Bench",
+  "prov:wasDerivedFrom": [
+    "Anonymous author-curated task specifications",
+    "Bounded public component-catalog slices included in the artifact",
+    "Feasible reference-design anchors included with each task card"
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "SoftwareApplication",
+    "name": "PE-Bench artifact builder",
+    "softwareVersion": "pebench-v1.0-78task",
+    "url": "https://github.com/spongelovesorange/PE-Bench"
+  },
+  "rai:annotationPlatform": "Author-curated YAML task cards with feasible reference-design anchors.",
+  "rai:dataBiases": "Tasks emphasize converter-design closure under the included benchmark families and component catalogs. Results should not be interpreted as broad electrical-engineering competence outside these families.",
+  "rai:dataCollection": "Synthetic benchmark task cards authored for engineering evaluation; no personal data.",
+  "rai:dataLimitations": "Not a hardware-certification dataset, production sign-off workflow, automated procurement system, or replacement for qualified engineering review.",
+  "rai:dataSocialImpact": "The benchmark may improve auditability of AI-assisted engineering systems, but unsafe use could lead to over-trust in generated designs. Qualified human review remains required.",
+  "rai:dataUseCases": "Evaluation of AI-assisted power-electronics design systems under PE-Bench criteria.",
+  "rai:hasSyntheticData": true,
+  "rai:personalSensitiveInformation": "None.",
+  "recordSet": [
+    {
+      "@id": "pebench_tasks",
+      "@type": "cr:RecordSet",
+      "data": {
+        "@id": "task_records_jsonl"
+      },
+      "description": "One record per executable benchmark task.",
+      "field": [
+        {
+          "@id": "pebench_tasks/task_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "task_id",
+          "source": {
+            "extract": {
+              "jsonPath": "$.task_id"
+            },
+            "fileObject": {
+              "@id": "task_records_jsonl"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/bank",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "bank",
+          "source": {
+            "extract": {
+              "jsonPath": "$.bank"
+            },
+            "fileObject": {
+              "@id": "task_records_jsonl"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/topology",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "topology",
+          "source": {
+            "extract": {
+              "jsonPath": "$.topology"
+            },
+            "fileObject": {
+              "@id": "task_records_jsonl"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/difficulty_tier",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "difficulty_tier",
+          "source": {
+            "extract": {
+              "jsonPath": "$.difficulty_tier"
+            },
+            "fileObject": {
+              "@id": "task_records_jsonl"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/split",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "split",
+          "source": {
+            "extract": {
+              "jsonPath": "$.split"
+            },
+            "fileObject": {
+              "@id": "task_records_jsonl"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/natural_language_spec",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "natural_language_spec",
+          "source": {
+            "extract": {
+              "jsonPath": "$.natural_language_spec"
+            },
+            "fileObject": {
+              "@id": "task_records_jsonl"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/reference_design",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "reference_design",
+          "source": {
+            "extract": {
+              "jsonPath": "$.reference_design"
+            },
+            "fileObject": {
+              "@id": "task_records_jsonl"
+            }
+          }
+        }
+      ],
+      "key": {
+        "@id": "pebench_tasks/task_id"
+      },
+      "name": "PE-Bench task records"
+    }
+  ],
+  "url": "https://github.com/spongelovesorange/PE-Bench",
+  "version": "pebench-v1.0-78task"
+}

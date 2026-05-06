@@ -1,0 +1,4 @@
+baseline_name,model_name,variant,seed_count,complete_seed_count,task_records,vtsr_mean,vtsr_std,partial,pass_at_3,unsupported_values_percent,invalid_bom_percent,sim_calls,mean_score,evidence_level
+reference_agent__wo_component_grounding,gpt-4o-mini,without_component_grounding,3,3,234,0.012821,0.0,0.708529,0.012821,33.333333,82.051282,1.846154,70.852949,frozen_actual_api_run_records
+reference_agent__wo_correction_memory,gpt-4o-mini,without_correction_memory,3,3,234,0.534188,0.032264,0.77665,0.615385,44.017094,0.0,1.461538,77.664957,frozen_actual_api_run_records
+reference_agent__wo_formula_guardrails,gpt-4o-mini,without_formula_guardrails,3,3,234,0.213675,0.019583,0.812976,0.320513,63.247863,0.0,1.846154,81.297564,frozen_actual_api_run_records

@@ -1,0 +1,26 @@
+{
+  "created_for": "anonymous_review_artifact",
+  "generated_at_utc": "2026-05-06T00:00:00+00:00",
+  "generated_from": "artifacts/evidence/frozen_v1",
+  "notes": [
+    "These Markdown tables are generated from frozen evidence CSV files.",
+    "They do not call external APIs.",
+    "Use scripts/reproduce_paper_tables.py to assert exact paper-facing numeric values."
+  ],
+  "output_files": [
+    "ablation_summary.md",
+    "backbone_robustness.md",
+    "heldout_summary.md",
+    "inverter_extension_summary.md",
+    "leaderboard_summary.md",
+    "retry_budget_summary.md",
+    "simulation_check_gap.md",
+    "task_accounting.md",
+    "topology_slice_summary.md",
+    "validation_summary.md"
+  ],
+  "script": "scripts/build_paper_tables.py",
+  "source_evidence_kind": "frozen_manuscript_summary_records",
+  "source_raw_logs_included": false,
+  "source_task_total": 78
+}

@@ -1,0 +1,8 @@
+{
+  "actual_leaderboard": "artifacts/evidence/paper_main_raw_backbone_vapi_o3mini_20260507/leaderboard_summary.csv",
+  "paper_leaderboard": "artifacts/evidence/frozen_v1/leaderboard_summary.csv",
+  "reason": "main-paper-table promotion was not requested",
+  "requested_for_main_paper_tables": false,
+  "tolerance": 0.035,
+  "used_for_main_paper_tables": false
+}

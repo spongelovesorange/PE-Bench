@@ -1,0 +1,17 @@
+# Main Leaderboard
+
+Paper-facing 78-task VTSR leaderboard summary.
+
+Source: `artifacts/evidence/frozen_v1/leaderboard_summary.csv`
+
+| method | code_id | vtsr_mean | vtsr_std | partial | pass_at_3 | unsupported_values_percent | invalid_bom_percent | sim_calls | task_count | seeds | evidence_level |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LLM-only | direct_prompting | 0.184 | 0.015 | 0.402 | 0.201 | 86.4 | 52.1 | 0.0 | 78 | 3 | frozen_manuscript_summary_record |
+| Structured-output only | structured_output_only | 0.19 | 0.012 | 0.415 | 0.215 | 82.5 | 50.8 | 0.0 | 78 | 3 | frozen_manuscript_summary_record |
+| Text Self-Refine | text_only_self_refine | 0.175 | 0.02 | 0.422 | 0.22 | 76.8 | 48.5 | 0.0 | 78 | 3 | frozen_manuscript_summary_record |
+| LLM+Tools | llm_tools | 0.205 | 0.018 | 0.45 | 0.245 | 70.2 | 42.0 | 2.4 | 78 | 3 | frozen_manuscript_summary_record |
+| Single-Agent+Retry | single_agent_retry | 0.218 | 0.022 | 0.465 | 0.26 | 65.5 | 39.2 | 3.2 | 78 | 3 | frozen_manuscript_summary_record |
+| Generic Two-Role MAS | generic_two_role_mas | 0.235 | 0.019 | 0.49 | 0.285 | 58.0 | 35.4 | 3.5 | 78 | 3 | frozen_manuscript_summary_record |
+| PE-GPT-style | pe_gpt_style | 0.252 | 0.025 | 0.52 | 0.312 | 55.4 | 30.1 | 2.8 | 78 | 3 | frozen_manuscript_summary_record |
+| Strong Baseline | reference_agent | 0.684 | 0.028 | 0.845 | 0.755 | 8.2 | 4.5 | 1.7 | 78 | 3 | frozen_manuscript_summary_record |
+

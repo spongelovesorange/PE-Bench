@@ -1,0 +1,92 @@
+schema_version: pebench_topology_full_v1.0
+task_id: topology_buck_easy_24v1p2a
+topology: buck
+difficulty_tier: easy
+natural_language_spec: Design a non-isolated buck converter from 36-54 VDC input to
+  24 V / 1.2 A output. Target at least 91.0% efficiency, keep output ripple below
+  55 mV, and maintain conservative switch, diode, inductor, and claim-consistency
+  margins for a 48V distribution auxiliary rail.
+benchmark_meta:
+  track: nonisolated_buck_design
+  split: public_dev
+  task_family: nonisolated_dcdc
+  source: pebench_multitopology_v1
+structured_spec:
+  input_range_volts:
+    min: 36
+    max: 54
+    domain: dc
+  output:
+    voltage_v: 24.0
+    current_a: 1.2
+    power_w: 28.8
+    polarity: positive
+  switching_frequency_khz:
+    min: 250
+    max: 550
+  targets:
+    efficiency_percent: 91.0
+    ripple_mv: 55.0
+  constraints:
+    max_duty_cycle: 0.713
+    max_inductor_peak_current_a: 2.02
+    max_mosfet_voltage_v: 76.03
+    max_diode_reverse_voltage_v: 72.9
+    max_inductor_ripple_percent: 45.0
+    max_output_cap_ripple_current_a: 0.8
+  preferences:
+    cost_priority: medium
+    volume_priority: low
+    control_mode: current_mode_preferred
+  component_catalog_version: pebench-topology-full-v1.0
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: topology_theory
+  weight: 18
+- name: component_grounding
+  weight: 18
+- name: efficiency_target
+  weight: 14
+- name: ripple_target
+  weight: 14
+- name: stress_margin
+  weight: 16
+- name: claim_consistency
+  weight: 10
+closure_gates:
+- schema_closure
+- topology_theory_closure
+- component_grounding
+- stress_margin
+- claim_consistency
+reference_design:
+  topology: buck
+  duty_cycle_nominal: 0.533
+  inductance_uh: 72.92
+  output_capacitance_uf: 22.0
+  switching_frequency_khz: 400.0
+  inductor_ripple_current_a: 0.384
+  switch_peak_current_a: 1.392
+  selected_components:
+    controller: TPS54202
+    switch: CSD19536KTT
+    diode: STPS10H100
+    output_capacitor: EEU-FR1V471
+    inductor: SER2915H-333
+  expected_metrics:
+    efficiency_percent: 92.4
+    ripple_mv: 31.9
+    mosfet_voltage_stress_v: 59.4
+    diode_reverse_voltage_v: 58.32
+    inductor_peak_current_a: 1.392
+    startup_success: true
+  cost_proxy_usd: 4.47
+known_failure_modes:
+- Spec Parsing Failure
+- Infeasible Theory Failure
+- Invalid or Unsafe BOM
+- Efficiency Miss
+- Ripple / Regulation Miss
+- Stress Violation / Escalation Required
+- Optimistic but Unrealistic Claim

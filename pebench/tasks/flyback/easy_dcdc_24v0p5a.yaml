@@ -1,0 +1,78 @@
+task_id: easy_dcdc_24v0p5a
+natural_language_spec: Design an isolated flyback converter from 36-72 VDC input to
+  24 V / 0.5 A output. Target at least 85.5% efficiency, keep output ripple below
+  70 mV, and Keep the solution compact and do not rely on exotic parts.
+difficulty_tier: easy
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: private_holdout
+  task_family: dcdc_general
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 36
+    max: 72
+    domain: dc
+  output:
+    voltage_v: 24.0
+    current_a: 0.5
+    power_w: 12.0
+  switching_frequency_khz:
+    min: 70
+    max: 120
+  targets:
+    efficiency_percent: 85.5
+    ripple_mv: 70.0
+  constraints:
+    max_duty_cycle: 0.45
+    max_primary_peak_current_a: 3.0
+    max_mosfet_voltage_v: 302.4
+    max_diode_reverse_voltage_v: 96.0
+    max_flux_density_mt: 230.0
+  preferences:
+    cost_priority: medium
+    volume_priority: low
+    allowed_controller_families:
+    - qr
+    - pwm
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 3.5
+  magnetizing_inductance_uh: 199.4
+  switching_frequency_khz: 88.0
+  duty_cycle_max: 0.42
+  primary_peak_current_a: 2.16
+  selected_components:
+    controller: NCP1342
+    mosfet: STF7N65M2
+    diode: STPS8H100
+    output_capacitor: EEU-FR1E221
+    core: EFD20_3C95
+  expected_metrics:
+    efficiency_percent: 86.7
+    ripple_mv: 45.5
+    mosfet_voltage_stress_v: 241.92
+    diode_reverse_voltage_v: 76.8
+    flux_density_mt: 177.1
+    startup_success: true
+  cost_proxy_usd: 3.53
+known_failure_modes:
+- Spec Parsing Failure
+- Ripple / Regulation Miss
+- Optimistic but Unrealistic Claim

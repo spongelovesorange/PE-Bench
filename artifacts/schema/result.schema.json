@@ -1,0 +1,91 @@
+{
+  "$id": "https://pebench.local/schema/result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "aggregate_scores": {
+      "type": "object"
+    },
+    "baseline_name": {
+      "type": "string"
+    },
+    "constraint_violations": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "difficulty_tier": {
+      "enum": [
+        "easy",
+        "medium",
+        "hard",
+        "boundary",
+        "stress"
+      ],
+      "type": "string"
+    },
+    "execution_log": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "failure_groups": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "failure_tags": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "model_name": {
+      "type": "string"
+    },
+    "pass_fail": {
+      "type": "boolean"
+    },
+    "runtime_stats": {
+      "type": "object"
+    },
+    "score_total": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "simulation_metrics": {
+      "type": "object"
+    },
+    "sub_scores": {
+      "type": "object"
+    },
+    "task_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "aggregate_scores",
+    "baseline_name",
+    "constraint_violations",
+    "difficulty_tier",
+    "execution_log",
+    "failure_groups",
+    "failure_tags",
+    "model_name",
+    "pass_fail",
+    "runtime_stats",
+    "score_total",
+    "seed",
+    "simulation_metrics",
+    "sub_scores",
+    "task_id"
+  ],
+  "title": "PE-Bench evaluator result",
+  "type": "object"
+}

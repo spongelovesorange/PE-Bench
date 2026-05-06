@@ -1,0 +1,7 @@
+baseline_name,model_name,variant,track,seed_count,task_records,vtsr_mean,mean_score,evidence_level
+direct_prompting,o3-mini,full,flyback,3,90,0.0,53.009889,paper_main_raw_api_evidence
+direct_prompting,o3-mini,full,three_phase_inverter,3,36,0.055556,32.443333,paper_main_raw_api_evidence
+direct_prompting,o3-mini,full,topology_full,3,108,0.0,22.950556,paper_main_raw_api_evidence
+reference_agent,o3-mini,full,flyback,3,90,0.366667,97.672,paper_main_raw_api_evidence
+reference_agent,o3-mini,full,three_phase_inverter,3,36,0.916667,98.833333,paper_main_raw_api_evidence
+reference_agent,o3-mini,full,topology_full,3,108,0.861111,86.093241,paper_main_raw_api_evidence

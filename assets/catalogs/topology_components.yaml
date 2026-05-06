@@ -1,0 +1,126 @@
+version: pebench-topology-full-v1.0
+controllers:
+  - part_id: TPS54202
+    family: synchronous_buck
+    max_input_v: 28
+    max_output_current_a: 2.0
+    cost_usd: 0.72
+  - part_id: LM5155
+    family: boost_or_buck_boost
+    max_input_v: 45
+    max_switch_current_a: 6.0
+    cost_usd: 1.38
+  - part_id: LM5176
+    family: four_switch_buck_boost
+    max_input_v: 55
+    max_switch_current_a: 10.0
+    cost_usd: 2.85
+switches:
+  - part_id: BSC340N08NS3
+    voltage_rating_v: 80
+    current_rating_a: 40.0
+    rds_on_mohm: 34.0
+    cost_usd: 0.64
+  - part_id: CSD19536KTT
+    voltage_rating_v: 100
+    current_rating_a: 50.0
+    rds_on_mohm: 12.0
+    cost_usd: 1.18
+  - part_id: IPB017N10N5
+    voltage_rating_v: 100
+    current_rating_a: 120.0
+    rds_on_mohm: 1.7
+    cost_usd: 2.35
+  - part_id: BSC160N15NS5
+    voltage_rating_v: 150
+    current_rating_a: 80.0
+    rds_on_mohm: 16.0
+    cost_usd: 2.75
+  - part_id: STF20N20M5
+    voltage_rating_v: 200
+    current_rating_a: 18.0
+    rds_on_mohm: 120.0
+    cost_usd: 1.95
+diodes:
+  - part_id: SS54
+    voltage_rating_v: 40
+    current_rating_a: 5.0
+    cost_usd: 0.12
+  - part_id: STPS10H100
+    voltage_rating_v: 100
+    current_rating_a: 10.0
+    cost_usd: 0.58
+  - part_id: MBR20100CT
+    voltage_rating_v: 100
+    current_rating_a: 20.0
+    cost_usd: 0.84
+  - part_id: STPS20H150CT
+    voltage_rating_v: 150
+    current_rating_a: 20.0
+    cost_usd: 1.15
+  - part_id: STTH30R02CW
+    voltage_rating_v: 200
+    current_rating_a: 30.0
+    cost_usd: 1.55
+inductors:
+  - part_id: SRP7030-100M
+    inductance_uh: 10.0
+    saturation_current_a: 8.0
+    dc_resistance_mohm: 22.0
+    cost_usd: 0.72
+  - part_id: SRP7030-150M
+    inductance_uh: 15.0
+    saturation_current_a: 7.2
+    dc_resistance_mohm: 28.0
+    cost_usd: 0.76
+  - part_id: SRP1040-220M
+    inductance_uh: 22.0
+    saturation_current_a: 9.5
+    dc_resistance_mohm: 18.0
+    cost_usd: 0.95
+  - part_id: SER2915H-333
+    inductance_uh: 33.0
+    saturation_current_a: 12.0
+    dc_resistance_mohm: 14.0
+    cost_usd: 1.65
+  - part_id: XAL1010-153
+    inductance_uh: 15.0
+    saturation_current_a: 18.0
+    dc_resistance_mohm: 9.2
+    cost_usd: 1.85
+  - part_id: SER2918H-223
+    inductance_uh: 22.0
+    saturation_current_a: 20.0
+    dc_resistance_mohm: 8.5
+    cost_usd: 2.15
+  - part_id: XAL1510-333
+    inductance_uh: 33.0
+    saturation_current_a: 28.0
+    dc_resistance_mohm: 6.8
+    cost_usd: 2.65
+output_capacitors:
+  - part_id: EEU-FR1E221
+    voltage_rating_v: 25
+    capacitance_uf: 220
+    ripple_current_a: 1.35
+    cost_usd: 0.26
+  - part_id: EEU-FR1V471
+    voltage_rating_v: 35
+    capacitance_uf: 470
+    ripple_current_a: 2.0
+    cost_usd: 0.34
+  - part_id: GRM32ER61H476ME15
+    voltage_rating_v: 50
+    capacitance_uf: 47
+    ripple_current_a: 2.5
+    cost_usd: 0.42
+  - part_id: EEU-FR1J221
+    voltage_rating_v: 63
+    capacitance_uf: 220
+    ripple_current_a: 1.85
+    cost_usd: 0.48
+  - part_id: C3225X7R2A226M
+    voltage_rating_v: 100
+    capacitance_uf: 22
+    ripple_current_a: 2.2
+    cost_usd: 0.62

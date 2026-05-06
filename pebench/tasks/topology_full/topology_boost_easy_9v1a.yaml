@@ -1,0 +1,92 @@
+schema_version: pebench_topology_full_v1.0
+task_id: topology_boost_easy_9v1a
+topology: boost
+difficulty_tier: easy
+natural_language_spec: Design a non-isolated boost converter from 3.3-5 VDC input
+  to 9 V / 1.0 A output. Target at least 84.0% efficiency, keep output ripple below
+  55 mV, and maintain conservative switch, diode, inductor, and claim-consistency
+  margins for a low-voltage battery boost rail.
+benchmark_meta:
+  track: nonisolated_boost_design
+  split: public_dev
+  task_family: nonisolated_dcdc
+  source: pebench_multitopology_v1
+structured_spec:
+  input_range_volts:
+    min: 3.3
+    max: 5
+    domain: dc
+  output:
+    voltage_v: 9.0
+    current_a: 1.0
+    power_w: 9.0
+    polarity: positive
+  switching_frequency_khz:
+    min: 350
+    max: 700
+  targets:
+    efficiency_percent: 84.0
+    ripple_mv: 55.0
+  constraints:
+    max_duty_cycle: 0.719
+    max_inductor_peak_current_a: 4.34
+    max_mosfet_voltage_v: 13.59
+    max_diode_reverse_voltage_v: 12.94
+    max_inductor_ripple_percent: 45.0
+    max_output_cap_ripple_current_a: 0.83
+  preferences:
+    cost_priority: medium
+    volume_priority: low
+    control_mode: current_mode_preferred
+  component_catalog_version: pebench-topology-full-v1.0
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: topology_theory
+  weight: 18
+- name: component_grounding
+  weight: 18
+- name: efficiency_target
+  weight: 14
+- name: ripple_target
+  weight: 14
+- name: stress_margin
+  weight: 16
+- name: claim_consistency
+  weight: 10
+closure_gates:
+- schema_closure
+- topology_theory_closure
+- component_grounding
+- stress_margin
+- claim_consistency
+reference_design:
+  topology: boost
+  duty_cycle_nominal: 0.539
+  inductance_uh: 5.16
+  output_capacitance_uf: 32.18
+  switching_frequency_khz: 525.0
+  inductor_ripple_current_a: 0.826
+  switch_peak_current_a: 2.995
+  selected_components:
+    controller: LM5155
+    switch: BSC340N08NS3
+    diode: SS54
+    output_capacitor: EEU-FR1E221
+    inductor: SRP7030-100M
+  expected_metrics:
+    efficiency_percent: 85.1
+    ripple_mv: 31.9
+    mosfet_voltage_stress_v: 10.62
+    diode_reverse_voltage_v: 10.35
+    inductor_peak_current_a: 2.995
+    startup_success: true
+  cost_proxy_usd: 3.12
+known_failure_modes:
+- Spec Parsing Failure
+- Infeasible Theory Failure
+- Invalid or Unsafe BOM
+- Efficiency Miss
+- Ripple / Regulation Miss
+- Stress Violation / Escalation Required
+- Optimistic but Unrealistic Claim

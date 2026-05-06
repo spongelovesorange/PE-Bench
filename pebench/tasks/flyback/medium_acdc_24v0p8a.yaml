@@ -1,0 +1,77 @@
+task_id: medium_acdc_24v0p8a
+natural_language_spec: Design an isolated flyback converter from 90-265 VAC input
+  to 24 V / 0.8 A output. Target at least 87.0% efficiency, keep output ripple below
+  55 mV, and Keep the transformer and snubber practical for a light-to-mid power rail.
+difficulty_tier: medium
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: public_dev
+  task_family: acdc_general
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 90
+    max: 265
+    domain: ac
+  output:
+    voltage_v: 24.0
+    current_a: 0.8
+    power_w: 19.2
+  switching_frequency_khz:
+    min: 70
+    max: 120
+  targets:
+    efficiency_percent: 87.0
+    ripple_mv: 55.0
+  constraints:
+    max_duty_cycle: 0.43
+    max_primary_peak_current_a: 3.3
+    max_mosfet_voltage_v: 590.0
+    max_diode_reverse_voltage_v: 90.0
+    max_flux_density_mt: 220.0
+  preferences:
+    cost_priority: medium
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 6.2
+  magnetizing_inductance_uh: 287.6
+  switching_frequency_khz: 91.0
+  duty_cycle_max: 0.4
+  primary_peak_current_a: 2.57
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: STPS8H100
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 87.9
+    ripple_mv: 39.6
+    mosfet_voltage_stress_v: 495.6
+    diode_reverse_voltage_v: 75.6
+    flux_density_mt: 178.2
+    startup_success: true
+  cost_proxy_usd: 4.34
+known_failure_modes:
+- Infeasible Theory Failure
+- Efficiency Miss
+- Invalid or Unsafe BOM

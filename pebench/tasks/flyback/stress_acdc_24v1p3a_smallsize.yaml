@@ -1,0 +1,79 @@
+task_id: stress_acdc_24v1p3a_smallsize
+natural_language_spec: Design an isolated flyback converter from 90-265 VAC input
+  to 24 V / 1.3 A output. Target at least 89.1% efficiency, keep output ripple below
+  38 mV, and Small size, low cost, and strong stress margin are requested simultaneously.
+difficulty_tier: stress
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: private_holdout
+  task_family: acdc_conflicting_objectives
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 90
+    max: 265
+    domain: ac
+  output:
+    voltage_v: 24.0
+    current_a: 1.3
+    power_w: 31.2
+  switching_frequency_khz:
+    min: 82
+    max: 135
+  targets:
+    efficiency_percent: 89.1
+    ripple_mv: 38.0
+  constraints:
+    max_duty_cycle: 0.4
+    max_primary_peak_current_a: 4.5
+    max_mosfet_voltage_v: 585.0
+    max_diode_reverse_voltage_v: 90.0
+    max_flux_density_mt: 205.0
+  preferences:
+    cost_priority: high
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 6.2
+  magnetizing_inductance_uh: 203.6
+  switching_frequency_khz: 120.2
+  duty_cycle_max: 0.365
+  primary_peak_current_a: 3.96
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: MBR20100CT
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 89.25
+    ripple_mv: 34.2
+    mosfet_voltage_stress_v: 532.35
+    diode_reverse_voltage_v: 81.9
+    flux_density_mt: 180.4
+    startup_success: true
+  cost_proxy_usd: 4.46
+known_failure_modes:
+- Invalid or Unsafe BOM
+- Simulation Execution Failure
+- Optimistic but Unrealistic Claim
+- Efficiency Miss
+- Stress Violation / Escalation Required

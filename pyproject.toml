@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pebench"
+version = "0.1.0"
+description = "PE-Bench: component-grounded benchmark for verifiable power-electronics design agents"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "PyYAML>=6.0",
+  "matplotlib>=3.8",
+  "openai>=1.40.0",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["pebench*", "flybackbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

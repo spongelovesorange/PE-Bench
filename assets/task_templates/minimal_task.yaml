@@ -1,0 +1,69 @@
+task_id: template_task
+natural_language_spec: >
+  Design an isolated flyback converter for the provided input and output target.
+difficulty_tier: easy
+structured_spec:
+  input_range_volts:
+    min: 18
+    max: 36
+    domain: dc
+  output:
+    voltage_v: 12.0
+    current_a: 1.0
+    power_w: 12.0
+  switching_frequency_khz:
+    min: 70
+    max: 130
+  targets:
+    efficiency_percent: 84.0
+    ripple_mv: 80.0
+  constraints:
+    max_duty_cycle: 0.45
+    max_primary_peak_current_a: 3.0
+    max_mosfet_voltage_v: 200.0
+    max_diode_reverse_voltage_v: 120.0
+    max_flux_density_mt: 240.0
+  preferences:
+    cost_priority: medium
+    volume_priority: low
+    allowed_controller_families: [qr, pwm]
+  component_catalog_version: v0.1
+evaluation_rubric:
+  - name: spec_grounding
+    weight: 10
+  - name: theoretical_feasibility
+    weight: 15
+  - name: bom_validity
+    weight: 20
+  - name: efficiency_target
+    weight: 15
+  - name: ripple_target
+    weight: 15
+  - name: stress_margin
+    weight: 15
+  - name: cost_reasonableness
+    weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 4.8
+  magnetizing_inductance_uh: 165.0
+  switching_frequency_khz: 90.0
+  duty_cycle_max: 0.39
+  primary_peak_current_a: 2.2
+  selected_components:
+    controller: UCC28740
+    mosfet: STF7N65M2
+    diode: STPS8H100
+    output_capacitor: EEU-FR1V471
+    core: EFD20_3C95
+  expected_metrics:
+    efficiency_percent: 85.4
+    ripple_mv: 42.0
+    mosfet_voltage_stress_v: 156.0
+    diode_reverse_voltage_v: 74.0
+    flux_density_mt: 176.0
+    startup_success: true
+  cost_proxy_usd: 3.75
+known_failure_modes:
+  - Spec Parsing Failure
+  - Ripple / Regulation Miss

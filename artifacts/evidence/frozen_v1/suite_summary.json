@@ -1,0 +1,31 @@
+{
+  "evidence_kind": "frozen_manuscript_summary_records",
+  "families": [
+    "Buck",
+    "Boost",
+    "Buck-Boost",
+    "Flyback",
+    "Three-phase inverter"
+  ],
+  "primary_metric": "VTSR",
+  "raw_log_status": "not included; replace this summary bundle with sanitized raw run records after full rerun if available",
+  "raw_logs_included": false,
+  "source_records": [
+    "paper_pdf",
+    "main_tex",
+    "internal_experiment_notes_pdf"
+  ],
+  "task_total": 78,
+  "verified_tables": [
+    "task_accounting",
+    "leaderboard",
+    "simulation_check_gap",
+    "ablation",
+    "backbone_robustness",
+    "topology_slice",
+    "heldout",
+    "retry_budget",
+    "validation",
+    "inverter_extension"
+  ]
+}

@@ -1,0 +1,78 @@
+task_id: hard_acdc_12v2p2a_lowripple
+natural_language_spec: Design an isolated flyback converter from 85-265 VAC input
+  to 12 V / 2.2 A output. Target at least 88.8% efficiency, keep output ripple below
+  38 mV, and Keep ripple very low without sacrificing primary stress margin.
+difficulty_tier: hard
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: public_dev
+  task_family: acdc_low_ripple
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 85
+    max: 265
+    domain: ac
+  output:
+    voltage_v: 12.0
+    current_a: 2.2
+    power_w: 26.4
+  switching_frequency_khz:
+    min: 78
+    max: 130
+  targets:
+    efficiency_percent: 88.8
+    ripple_mv: 38.0
+  constraints:
+    max_duty_cycle: 0.4
+    max_primary_peak_current_a: 4.0
+    max_mosfet_voltage_v: 585.0
+    max_diode_reverse_voltage_v: 82.0
+    max_flux_density_mt: 210.0
+  preferences:
+    cost_priority: low
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 8.5
+  magnetizing_inductance_uh: 261.2
+  switching_frequency_khz: 106.6
+  duty_cycle_max: 0.375
+  primary_peak_current_a: 3.36
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: MBR20100CT
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 89.3
+    ripple_mv: 30.4
+    mosfet_voltage_stress_v: 514.8
+    diode_reverse_voltage_v: 72.16
+    flux_density_mt: 178.5
+    startup_success: true
+  cost_proxy_usd: 4.46
+known_failure_modes:
+- Infeasible Theory Failure
+- Simulation Execution Failure
+- Efficiency Miss
+- Stress Violation / Escalation Required

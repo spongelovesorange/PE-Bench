@@ -1,0 +1,79 @@
+task_id: boundary_acdc_15v1a_tight_margin
+natural_language_spec: Design an isolated flyback converter from 85-265 VAC input
+  to 15 V / 1 A output. Target at least 88.4% efficiency, keep output ripple below
+  42 mV, and This task is intentionally near the boundary where margins are still
+  feasible but narrow.
+difficulty_tier: boundary
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: public_dev
+  task_family: acdc_boundary
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 85
+    max: 265
+    domain: ac
+  output:
+    voltage_v: 15.0
+    current_a: 1.0
+    power_w: 15.0
+  switching_frequency_khz:
+    min: 85
+    max: 135
+  targets:
+    efficiency_percent: 88.4
+    ripple_mv: 42.0
+  constraints:
+    max_duty_cycle: 0.39
+    max_primary_peak_current_a: 2.9
+    max_mosfet_voltage_v: 585.0
+    max_diode_reverse_voltage_v: 82.0
+    max_flux_density_mt: 208.0
+  preferences:
+    cost_priority: medium
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 7.7
+  magnetizing_inductance_uh: 335.0
+  switching_frequency_khz: 119.0
+  duty_cycle_max: 0.375
+  primary_peak_current_a: 2.61
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: MBR20100CT
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 88.65
+    ripple_mv: 36.12
+    mosfet_voltage_stress_v: 544.05
+    diode_reverse_voltage_v: 76.26
+    flux_density_mt: 187.2
+    startup_success: true
+  cost_proxy_usd: 4.46
+known_failure_modes:
+- Invalid or Unsafe BOM
+- Simulation Execution Failure
+- Optimistic but Unrealistic Claim
+- Stress Violation / Escalation Required

@@ -1,0 +1,92 @@
+schema_version: pebench_topology_full_v1.0
+task_id: topology_buck_boost_easy_15v1p5a
+topology: buck_boost
+difficulty_tier: easy
+natural_language_spec: Design a non-isolated buck-boost converter from 10-20 VDC input
+  to 15 V / 1.5 A output. Target at least 86.5% efficiency, keep output ripple below
+  60 mV, and maintain conservative switch, diode, inductor, and claim-consistency
+  margins for a non-isolated rail around transition.
+benchmark_meta:
+  track: nonisolated_buck_boost_design
+  split: public_dev
+  task_family: nonisolated_dcdc
+  source: pebench_multitopology_v1
+structured_spec:
+  input_range_volts:
+    min: 10
+    max: 20
+    domain: dc
+  output:
+    voltage_v: 15.0
+    current_a: 1.5
+    power_w: 22.5
+    polarity: positive
+  switching_frequency_khz:
+    min: 300
+    max: 650
+  targets:
+    efficiency_percent: 86.5
+    ripple_mv: 60.0
+  constraints:
+    max_duty_cycle: 0.68
+    max_inductor_peak_current_a: 2.92
+    max_mosfet_voltage_v: 50.18
+    max_diode_reverse_voltage_v: 47.25
+    max_inductor_ripple_percent: 45.0
+    max_output_cap_ripple_current_a: 0.8
+  preferences:
+    cost_priority: medium
+    volume_priority: low
+    control_mode: current_mode_preferred
+  component_catalog_version: pebench-topology-full-v1.0
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: topology_theory
+  weight: 18
+- name: component_grounding
+  weight: 18
+- name: efficiency_target
+  weight: 14
+- name: ripple_target
+  weight: 14
+- name: stress_margin
+  weight: 16
+- name: claim_consistency
+  weight: 10
+closure_gates:
+- schema_closure
+- topology_theory_closure
+- component_grounding
+- stress_margin
+- claim_consistency
+reference_design:
+  topology: buck_boost
+  duty_cycle_nominal: 0.5
+  inductance_uh: 28.45
+  output_capacitance_uf: 45.37
+  switching_frequency_khz: 475.0
+  inductor_ripple_current_a: 0.555
+  switch_peak_current_a: 2.012
+  selected_components:
+    controller: LM5176
+    switch: BSC340N08NS3
+    diode: STPS10H100
+    output_capacitor: EEU-FR1E221
+    inductor: SER2915H-333
+  expected_metrics:
+    efficiency_percent: 87.6
+    ripple_mv: 34.8
+    mosfet_voltage_stress_v: 39.2
+    diode_reverse_voltage_v: 37.8
+    inductor_peak_current_a: 2.012
+    startup_success: true
+  cost_proxy_usd: 5.98
+known_failure_modes:
+- Spec Parsing Failure
+- Infeasible Theory Failure
+- Invalid or Unsafe BOM
+- Efficiency Miss
+- Ripple / Regulation Miss
+- Stress Violation / Escalation Required
+- Optimistic but Unrealistic Claim

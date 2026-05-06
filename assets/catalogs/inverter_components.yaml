@@ -1,0 +1,105 @@
+version: pebench-inverter-v0.1
+controllers:
+- part_id: C2000-TINV-CTRL
+  description: C2000-class field-oriented/grid-tie controller
+  cost_usd: 18.0
+- part_id: STM32-MOTOR-CTRL
+  description: STM32 motor-control controller card
+  cost_usd: 14.0
+power_modules:
+- part_id: PM-650V-120A
+  voltage_rating_v: 650
+  current_rating_a: 120
+  technology: SiC MOSFET module
+  cost_usd: 118.0
+- part_id: PM-650V-500A
+  voltage_rating_v: 650
+  current_rating_a: 500
+  technology: parallel SiC MOSFET module
+  cost_usd: 520.0
+- part_id: PM-1200V-150A
+  voltage_rating_v: 1200
+  current_rating_a: 150
+  technology: SiC MOSFET module
+  cost_usd: 260.0
+- part_id: PM-1200V-250A
+  voltage_rating_v: 1200
+  current_rating_a: 250
+  technology: SiC MOSFET module
+  cost_usd: 390.0
+- part_id: PM-1700V-300A
+  voltage_rating_v: 1700
+  current_rating_a: 300
+  technology: high-voltage SiC MOSFET module
+  cost_usd: 690.0
+- part_id: PM-1200V-500A
+  voltage_rating_v: 1200
+  current_rating_a: 500
+  technology: high-current SiC MOSFET module
+  cost_usd: 740.0
+- part_id: PM-3300V-150A
+  voltage_rating_v: 3300
+  current_rating_a: 150
+  technology: high-voltage SiC MOSFET module
+  cost_usd: 940.0
+gate_drivers:
+- part_id: ISO5852S
+  isolation_voltage_v: 5700
+  peak_drive_current_a: 5.0
+  cost_usd: 5.2
+- part_id: UCC21750
+  isolation_voltage_v: 5700
+  peak_drive_current_a: 10.0
+  cost_usd: 7.8
+dc_link_capacitors:
+- part_id: DCL-450V-35A
+  voltage_rating_v: 450
+  ripple_current_a: 35
+  capacitance_uf: 940
+  cost_usd: 45.0
+- part_id: DCL-700V-90A
+  voltage_rating_v: 700
+  ripple_current_a: 90
+  capacitance_uf: 1200
+  cost_usd: 92.0
+- part_id: DCL-1000V-140A
+  voltage_rating_v: 1000
+  ripple_current_a: 140
+  capacitance_uf: 1600
+  cost_usd: 165.0
+- part_id: DCL-1100V-260A
+  voltage_rating_v: 1100
+  ripple_current_a: 260
+  capacitance_uf: 2200
+  cost_usd: 260.0
+- part_id: DCL-1800V-140A
+  voltage_rating_v: 1800
+  ripple_current_a: 140
+  capacitance_uf: 1500
+  cost_usd: 240.0
+current_sensors:
+- part_id: ACS772-100B
+  current_rating_a: 100
+  bandwidth_khz: 120
+  cost_usd: 6.5
+- part_id: LEM-HASS200
+  current_rating_a: 200
+  bandwidth_khz: 100
+  cost_usd: 21.0
+- part_id: LEM-HTFS500
+  current_rating_a: 500
+  bandwidth_khz: 75
+  cost_usd: 68.0
+emi_filters:
+- part_id: EMI-480V-50A
+  voltage_rating_v: 480
+  current_rating_a: 50
+  cost_usd: 35.0
+- part_id: EMI-690V-160A
+  voltage_rating_v: 690
+  current_rating_a: 160
+  cost_usd: 140.0
+- part_id: EMI-400V-500A
+  voltage_rating_v: 400
+  current_rating_a: 500
+  cost_usd: 310.0

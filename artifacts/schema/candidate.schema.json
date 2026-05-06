@@ -1,0 +1,288 @@
+{
+  "$id": "https://pebench.local/schema/candidate.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Family-aware structured output consumed by PE-Bench evaluators.",
+  "oneOf": [
+    {
+      "properties": {
+        "baseline_name": {
+          "type": "string"
+        },
+        "bom": {
+          "items": {
+            "properties": {
+              "category": {
+                "type": "string"
+              },
+              "part_id": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "category",
+              "part_id"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "design_rationale": {
+          "type": "string"
+        },
+        "final_claimed_metrics": {
+          "required": [
+            "diode_reverse_voltage_v",
+            "efficiency_percent",
+            "estimated_cost_usd",
+            "flux_density_mt",
+            "mosfet_voltage_stress_v",
+            "ripple_mv"
+          ],
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "model_name": {
+          "type": "string"
+        },
+        "parsed_spec": {
+          "type": "object"
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "simulation_config": {
+          "type": "object"
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "theoretical_design": {
+          "required": [
+            "duty_cycle_max",
+            "magnetizing_inductance_uh",
+            "primary_peak_current_a",
+            "switching_frequency_khz",
+            "topology",
+            "turns_ratio_primary_to_secondary"
+          ],
+          "type": "object"
+        },
+        "topology_decision": {
+          "type": "object"
+        },
+        "uncertainty_or_escalation_flag": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "baseline_name",
+        "bom",
+        "design_rationale",
+        "final_claimed_metrics",
+        "metadata",
+        "model_name",
+        "parsed_spec",
+        "seed",
+        "simulation_config",
+        "task_id",
+        "theoretical_design",
+        "uncertainty_or_escalation_flag"
+      ],
+      "title": "flyback candidate",
+      "type": "object"
+    },
+    {
+      "properties": {
+        "baseline_name": {
+          "type": "string"
+        },
+        "bom": {
+          "items": {
+            "properties": {
+              "category": {
+                "type": "string"
+              },
+              "part_id": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "category",
+              "part_id"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "design_rationale": {
+          "type": "string"
+        },
+        "final_claimed_metrics": {
+          "required": [
+            "diode_reverse_voltage_v",
+            "efficiency_percent",
+            "estimated_cost_usd",
+            "inductor_peak_current_a",
+            "mosfet_voltage_stress_v",
+            "ripple_mv"
+          ],
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "model_name": {
+          "type": "string"
+        },
+        "parsed_spec": {
+          "type": "object"
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "simulation_config": {
+          "type": "object"
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "theoretical_design": {
+          "required": [
+            "duty_cycle_nominal",
+            "inductance_uh",
+            "inductor_ripple_current_a",
+            "output_capacitance_uf",
+            "switch_peak_current_a",
+            "switching_frequency_khz",
+            "topology"
+          ],
+          "type": "object"
+        },
+        "topology_decision": {
+          "type": "object"
+        },
+        "uncertainty_or_escalation_flag": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "baseline_name",
+        "bom",
+        "final_claimed_metrics",
+        "metadata",
+        "model_name",
+        "parsed_spec",
+        "seed",
+        "simulation_config",
+        "task_id",
+        "theoretical_design",
+        "topology_decision",
+        "uncertainty_or_escalation_flag"
+      ],
+      "title": "topology_full candidate",
+      "type": "object"
+    },
+    {
+      "properties": {
+        "baseline_name": {
+          "type": "string"
+        },
+        "bom": {
+          "items": {
+            "properties": {
+              "category": {
+                "type": "string"
+              },
+              "part_id": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "category",
+              "part_id"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "design_rationale": {
+          "type": "string"
+        },
+        "final_claimed_metrics": {
+          "required": [
+            "dc_link_ripple_a",
+            "device_stress_v",
+            "efficiency_percent",
+            "estimated_cost_usd",
+            "phase_current_rms_a",
+            "thd_percent"
+          ],
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "model_name": {
+          "type": "string"
+        },
+        "parsed_spec": {
+          "type": "object"
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "simulation_config": {
+          "type": "object"
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "theoretical_design": {
+          "required": [
+            "dc_link_voltage_v",
+            "modulation_index",
+            "phase_current_rms_a",
+            "switching_frequency_khz",
+            "topology"
+          ],
+          "type": "object"
+        },
+        "topology_decision": {
+          "type": "object"
+        },
+        "uncertainty_or_escalation_flag": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "baseline_name",
+        "bom",
+        "final_claimed_metrics",
+        "metadata",
+        "model_name",
+        "parsed_spec",
+        "seed",
+        "simulation_config",
+        "task_id",
+        "theoretical_design",
+        "topology_decision",
+        "uncertainty_or_escalation_flag"
+      ],
+      "title": "three_phase_inverter candidate",
+      "type": "object"
+    }
+  ],
+  "title": "PE-Bench candidate output",
+  "type": "object"
+}

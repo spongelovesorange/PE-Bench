@@ -1,0 +1,79 @@
+task_id: hard_acdc_19v1p5a_compact
+natural_language_spec: Design an isolated flyback converter from 90-265 VAC input
+  to 19 V / 1.5 A output. Target at least 88.9% efficiency, keep output ripple below
+  42 mV, and The user wants a compact adapter-like design, so avoid loose magnetics
+  sizing.
+difficulty_tier: hard
+benchmark_meta:
+  track: autonomous_flyback_design
+  split: private_holdout
+  task_family: acdc_compact
+  source: pebench_v1
+structured_spec:
+  input_range_volts:
+    min: 90
+    max: 265
+    domain: ac
+  output:
+    voltage_v: 19.0
+    current_a: 1.5
+    power_w: 28.5
+  switching_frequency_khz:
+    min: 80
+    max: 132
+  targets:
+    efficiency_percent: 88.9
+    ripple_mv: 42.0
+  constraints:
+    max_duty_cycle: 0.4
+    max_primary_peak_current_a: 4.2
+    max_mosfet_voltage_v: 585.0
+    max_diode_reverse_voltage_v: 82.0
+    max_flux_density_mt: 210.0
+  preferences:
+    cost_priority: low
+    volume_priority: high
+    allowed_controller_families:
+    - qr
+  component_catalog_version: v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: theoretical_feasibility
+  weight: 15
+- name: bom_validity
+  weight: 20
+- name: efficiency_target
+  weight: 15
+- name: ripple_target
+  weight: 15
+- name: stress_margin
+  weight: 15
+- name: cost_reasonableness
+  weight: 10
+reference_design:
+  topology: flyback
+  turns_ratio_primary_to_secondary: 6.9
+  magnetizing_inductance_uh: 232.5
+  switching_frequency_khz: 108.6
+  duty_cycle_max: 0.375
+  primary_peak_current_a: 3.53
+  selected_components:
+    controller: NCP1342
+    mosfet: IPD60R380P7
+    diode: STPS8H100
+    output_capacitor: EEU-FR1V471
+    core: EFD25_3C95
+  expected_metrics:
+    efficiency_percent: 89.4
+    ripple_mv: 33.6
+    mosfet_voltage_stress_v: 514.8
+    diode_reverse_voltage_v: 72.16
+    flux_density_mt: 178.5
+    startup_success: true
+  cost_proxy_usd: 4.34
+known_failure_modes:
+- Infeasible Theory Failure
+- Simulation Execution Failure
+- Efficiency Miss
+- Stress Violation / Escalation Required

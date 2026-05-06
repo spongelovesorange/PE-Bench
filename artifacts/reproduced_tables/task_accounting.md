@@ -1,0 +1,15 @@
+# Task Accounting
+
+Released task counts by topology, difficulty, and split.
+
+Source: `artifacts/evidence/frozen_v1/task_accounting.csv`
+
+| topology | count | easy | medium | hard | boundary | stress | public_dev | holdout | extension | evidence_level |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Flyback | 30 | 6 | 10 | 6 | 4 | 4 | 24 | 6 | 0 | frozen_manuscript_summary_record |
+| Buck | 12 | 4 | 4 | 2 | 1 | 1 | 12 | 0 | 0 | frozen_manuscript_summary_record |
+| Boost | 12 | 4 | 4 | 2 | 1 | 1 | 12 | 0 | 0 | frozen_manuscript_summary_record |
+| Buck-Boost | 12 | 4 | 4 | 2 | 1 | 1 | 12 | 0 | 0 | frozen_manuscript_summary_record |
+| Three-phase inverter | 12 | 3 | 4 | 3 | 0 | 2 | 0 | 0 | 12 | frozen_manuscript_summary_record |
+| Total | 78 | 21 | 26 | 15 | 7 | 9 | 60 | 6 | 12 | frozen_manuscript_summary_record |
+

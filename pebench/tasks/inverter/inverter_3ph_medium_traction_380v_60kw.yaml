@@ -1,0 +1,93 @@
+schema_version: pebench_inverter_v0.1
+task_id: inverter_3ph_medium_traction_380v_60kw
+topology: three_phase_inverter
+difficulty_tier: medium
+natural_language_spec: Design a traction 380 V inverter with regenerative operation
+  from a 560-720 V DC link to 380 V line-line RMS / 60 kW output at 60 Hz. Meet at
+  least 96.2% efficiency, keep current THD below 3.8%, and close voltage, current,
+  DC-link ripple, protection, and claim-consistency margins.
+benchmark_meta:
+  track: three_phase_inverter_design
+  split: extension
+  task_family: three_phase_inverter
+  source: pebench_final_78task_release_v1
+structured_spec:
+  dc_link_voltage_v:
+    min: 560
+    max: 720
+    domain: dc
+  output:
+    line_line_rms_v: 380.0
+    power_w: 60000.0
+    frequency_hz: 60.0
+    phase_count: 3
+    mode: traction
+  switching_frequency_khz:
+    min: 8
+    max: 20
+  targets:
+    efficiency_percent: 96.2
+    thd_percent: 3.8
+  constraints:
+    max_modulation_index: 0.98
+    max_phase_current_rms_a: 127.93
+    max_dc_link_ripple_a: 46.4
+    max_device_voltage_v: 900
+    requires_isolated_gate_drive: true
+    requires_desat_or_ocp: true
+  preferences:
+    cost_priority: medium
+    thermal_priority: medium
+    control_mode: space_vector_pwm_with_current_loop
+  component_catalog_version: pebench-inverter-v0.1
+evaluation_rubric:
+- name: spec_grounding
+  weight: 10
+- name: dc_ac_theory
+  weight: 18
+- name: component_grounding
+  weight: 18
+- name: efficiency_target
+  weight: 14
+- name: quality_target
+  weight: 14
+- name: stress_margin
+  weight: 16
+- name: claim_consistency
+  weight: 10
+closure_gates:
+- schema_closure
+- dc_ac_theory_closure
+- component_grounding
+- stress_margin
+- claim_consistency
+reference_design:
+  topology: three_phase_inverter
+  dc_link_voltage_v: 640.0
+  modulation_index: 0.95
+  switching_frequency_khz: 14.0
+  phase_current_rms_a: 94.76
+  selected_components:
+    controller: STM32-MOTOR-CTRL
+    power_module: PM-1200V-150A
+    gate_driver: ISO5852S
+    dc_link_capacitor: DCL-1000V-140A
+    current_sensor: LEM-HASS200
+    emi_filter: EMI-690V-160A
+  expected_metrics:
+    efficiency_percent: 96.7
+    thd_percent: 3.0
+    dc_link_ripple_a: 23.04
+    device_stress_v: 777.6
+    phase_current_rms_a: 94.76
+    startup_success: true
+  cost_proxy_usd: 148.8
+known_failure_modes:
+- Spec Parsing Failure
+- Wrong Topology
+- Infeasible Theory Failure
+- Invalid or Unsafe BOM
+- Efficiency Miss
+- Current Quality Miss
+- Stress Violation / Escalation Required
+- Optimistic but Unrealistic Claim

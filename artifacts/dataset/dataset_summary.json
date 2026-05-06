@@ -1,0 +1,44 @@
+{
+  "created_at_utc": "2026-05-06T00:00:00+00:00",
+  "files": {
+    "croissant": "croissant_metadata.json",
+    "dataset_card": "docs/DATASET_CARD.md",
+    "task_inventory_csv": "artifacts/release/task_inventory.csv",
+    "task_records_csv": "artifacts/dataset/task_records.csv",
+    "task_records_jsonl": "artifacts/dataset/task_records.jsonl"
+  },
+  "license": {
+    "software": "MIT",
+    "tasks_docs_and_generated_artifacts": "CC BY 4.0"
+  },
+  "name": "PE-Bench",
+  "primary_metric": "verifiable task success rate (VTSR)",
+  "release_version": "pebench-v1.0-78task",
+  "task_counts": {
+    "by_bank": {
+      "flyback": 30,
+      "three_phase_inverter": 12,
+      "topology_full": 36
+    },
+    "by_difficulty": {
+      "boundary": 7,
+      "easy": 21,
+      "hard": 15,
+      "medium": 26,
+      "stress": 9
+    },
+    "by_split": {
+      "extension": 12,
+      "private_holdout": 6,
+      "public_dev": 60
+    },
+    "by_topology": {
+      "boost": 12,
+      "buck": 12,
+      "buck_boost": 12,
+      "flyback": 30,
+      "three_phase_inverter": 12
+    }
+  },
+  "task_total": 78
+}
