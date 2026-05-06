@@ -25,7 +25,12 @@ DATASET_CARD_PATH = REPO_ROOT / "docs" / "DATASET_CARD.md"
 RESPONSIBLE_AI_METADATA_PATH = REPO_ROOT / "docs" / "RESPONSIBLE_AI_METADATA.md"
 DATASET_CREATED_AT_UTC = "2026-05-06T00:00:00+00:00"
 DATASET_PUBLISHED_DATE = "2026-05-06"
-GITHUB_RAW_ROOT = "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main"
+ANONYMOUS_REVIEW_URL = "https://anonymous.4open.science/r/PE-Bench-ACFC/"
+CROISSANT_CORE_VERSION = "http://mlcommons.org/croissant/1.1"
+CROISSANT_RAI_VERSION = "http://mlcommons.org/croissant/RAI/1.0"
+NON_ANONYMOUS_GITHUB_ACCOUNT = "sponge" + "loves" + "orange"
+NON_ANONYMOUS_GITHUB_URL = "github.com/" + NON_ANONYMOUS_GITHUB_ACCOUNT
+NON_ANONYMOUS_RAW_GITHUB_URL = "raw.githubusercontent.com/" + NON_ANONYMOUS_GITHUB_ACCOUNT
 
 
 def parse_args() -> argparse.Namespace:
@@ -124,6 +129,11 @@ def _validate_croissant_metadata(croissant: dict[str, Any]) -> list[str]:
     for key in required_core:
         if not croissant.get(key):
             errors.append(f"croissant_metadata.json missing required core field: {key}")
+    conforms_to = croissant.get("conformsTo")
+    if not isinstance(conforms_to, list) or CROISSANT_CORE_VERSION not in conforms_to:
+        errors.append(f"croissant_metadata.json conformsTo must include {CROISSANT_CORE_VERSION}")
+    if not isinstance(conforms_to, list) or CROISSANT_RAI_VERSION not in conforms_to:
+        errors.append(f"croissant_metadata.json conformsTo must include {CROISSANT_RAI_VERSION}")
     required_rai = [
         "rai:dataCollection",
         "rai:dataUseCases",
@@ -138,11 +148,45 @@ def _validate_croissant_metadata(croissant: dict[str, Any]) -> list[str]:
         if key not in croissant:
             errors.append(f"croissant_metadata.json missing Responsible AI field: {key}")
     context = croissant.get("@context", {})
-    if not isinstance(context, dict) or "rai" not in context or "cr" not in context:
-        errors.append("croissant_metadata.json @context must define cr and rai prefixes")
+    if not isinstance(context, dict) or "rai" not in context or "cr" not in context or "dct" not in context:
+        errors.append("croissant_metadata.json @context must define cr, rai, and dct prefixes")
+    if isinstance(context, dict) and context.get("conformsTo") != "dct:conformsTo":
+        errors.append("croissant_metadata.json @context must map conformsTo to dct:conformsTo")
     distributions = croissant.get("distribution", [])
-    if not isinstance(distributions, list) or len(distributions) < 3:
+    if not isinstance(distributions, list) or len(distributions) < 8:
         errors.append("croissant_metadata.json distribution must include dataset and schema file objects")
+    distribution_ids = {entry.get("@id") for entry in distributions if isinstance(entry, dict)}
+    for required_id in [
+        "task_records_csv",
+        "task_records_jsonl",
+        "candidate_schema_json",
+        "result_schema_json",
+        "release_manifest_json",
+        "frozen_leaderboard_summary_csv",
+        "frozen_validation_summary_csv",
+        "component_catalogs_yaml",
+    ]:
+        if required_id not in distribution_ids:
+            errors.append(f"croissant_metadata.json distribution missing {required_id}")
+    for entry in distributions if isinstance(distributions, list) else []:
+        if not isinstance(entry, dict):
+            errors.append("croissant_metadata.json distribution entries must be objects")
+            continue
+        if entry.get("@type") != "cr:FileObject":
+            errors.append(f"croissant_metadata.json distribution {entry.get('@id', '<unknown>')} must use @type cr:FileObject")
+        content_url = str(entry.get("contentUrl", ""))
+        if NON_ANONYMOUS_GITHUB_URL in content_url or NON_ANONYMOUS_RAW_GITHUB_URL in content_url:
+            errors.append(f"croissant_metadata.json distribution leaks non-anonymous GitHub URL: {entry.get('@id')}")
+        sha = entry.get("sha256")
+        if sha and (not isinstance(sha, str) or len(sha) != 64 or any(ch not in "0123456789abcdef" for ch in sha.lower())):
+            errors.append(f"croissant_metadata.json distribution has invalid sha256: {entry.get('@id')}")
+    for url_key in ["url", "codeRepository"]:
+        value = str(croissant.get(url_key, ""))
+        if NON_ANONYMOUS_GITHUB_URL in value:
+            errors.append(f"croissant_metadata.json {url_key} leaks non-anonymous GitHub URL")
+    generated_by = croissant.get("prov:wasGeneratedBy", {})
+    if isinstance(generated_by, dict) and NON_ANONYMOUS_GITHUB_URL in str(generated_by.get("url", "")):
+        errors.append("croissant_metadata.json prov:wasGeneratedBy.url leaks non-anonymous GitHub URL")
     record_sets = croissant.get("recordSet", [])
     if not isinstance(record_sets, list) or not record_sets:
         errors.append("croissant_metadata.json recordSet must be a non-empty list")
@@ -150,6 +194,31 @@ def _validate_croissant_metadata(croissant: dict[str, Any]) -> list[str]:
         fields = record_sets[0].get("field", []) if isinstance(record_sets[0], dict) else []
         if not fields:
             errors.append("croissant_metadata.json first recordSet must define fields")
+        field_names = {field.get("name") for field in fields if isinstance(field, dict)}
+        for required_field in [
+            "task_id",
+            "bank",
+            "topology",
+            "difficulty_tier",
+            "split",
+            "track",
+            "task_family",
+            "input_domain",
+            "input_min",
+            "input_max",
+            "output_voltage",
+            "output_current",
+            "output_power_w",
+            "efficiency_target_percent",
+            "ripple_or_quality_target",
+            "known_failure_modes",
+            "component_catalog_version",
+            "task_path",
+            "source",
+            "schema_version",
+        ]:
+            if required_field not in field_names:
+                errors.append(f"croissant_metadata.json recordSet missing field: {required_field}")
         for field in fields:
             if not isinstance(field, dict) or "source" not in field:
                 errors.append("croissant_metadata.json fields must include source mappings")
@@ -230,27 +299,25 @@ def dataset_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
 
 def croissant_metadata(summary: dict[str, Any]) -> dict[str, Any]:
     return {
-        "@context": {
-            "@language": "en",
-            "@vocab": "https://schema.org/",
-            "cr": "http://mlcommons.org/croissant/",
-            "prov": "http://www.w3.org/ns/prov#",
-            "rai": "http://mlcommons.org/croissant/RAI/",
-            "sc": "https://schema.org/",
-        },
+        "@context": _croissant_context(),
         "@type": "sc:Dataset",
-        "conformsTo": "http://mlcommons.org/croissant/1.0",
+        "conformsTo": [CROISSANT_CORE_VERSION, CROISSANT_RAI_VERSION],
         "name": "PE-Bench",
         "description": (
             "PE-Bench is a 78-task benchmark and evaluator artifact for AI-assisted "
             "power-electronics design across Buck, Boost, Buck-Boost, Flyback, and "
             "three-phase inverter tasks."
         ),
-        "version": summary["release_version"],
+        "version": "1.0.0",
+        "sdVersion": summary["release_version"],
         "datePublished": DATASET_PUBLISHED_DATE,
+        "citeAs": (
+            "Anonymous PE-Bench Authors. PE-Bench: A Benchmark for Evaluating "
+            "Agent-Based Power Electronics Design Systems. Anonymous review artifact, 2026."
+        ),
         "license": "https://creativecommons.org/licenses/by/4.0/",
-        "codeRepository": "https://github.com/spongelovesorange/PE-Bench",
-        "url": "https://github.com/spongelovesorange/PE-Bench",
+        "codeRepository": ANONYMOUS_REVIEW_URL,
+        "url": ANONYMOUS_REVIEW_URL,
         "creator": {"@type": "Organization", "name": "Anonymous PE-Bench Authors"},
         "keywords": [
             "power electronics",
@@ -261,80 +328,34 @@ def croissant_metadata(summary: dict[str, Any]) -> dict[str, Any]:
             "reproducibility",
         ],
         "isAccessibleForFree": True,
-        "includedInDataCatalog": {"@type": "DataCatalog", "name": "GitHub anonymous review artifact"},
-        "distribution": [
-            {
-                "@type": "cr:FileObject",
-                "@id": "task_records_jsonl",
-                "name": "task_records.jsonl",
-                "contentUrl": f"{GITHUB_RAW_ROOT}/artifacts/dataset/task_records.jsonl",
-                "encodingFormat": "application/x-jsonlines",
-                "sha256": _sha256(REPO_ROOT / "artifacts" / "dataset" / "task_records.jsonl"),
-            },
-            {
-                "@type": "cr:FileObject",
-                "@id": "task_records_csv",
-                "name": "task_records.csv",
-                "contentUrl": f"{GITHUB_RAW_ROOT}/artifacts/dataset/task_records.csv",
-                "encodingFormat": "text/csv",
-                "sha256": _sha256(REPO_ROOT / "artifacts" / "dataset" / "task_records.csv"),
-            },
-            {
-                "@type": "cr:FileObject",
-                "@id": "task_inventory_csv",
-                "name": "task_inventory.csv",
-                "contentUrl": f"{GITHUB_RAW_ROOT}/artifacts/release/task_inventory.csv",
-                "encodingFormat": "text/csv",
-                "sha256": _sha256(REPO_ROOT / "artifacts" / "release" / "task_inventory.csv"),
-            },
-            {
-                "@type": "cr:FileObject",
-                "@id": "candidate_schema_json",
-                "name": "candidate.schema.json",
-                "contentUrl": f"{GITHUB_RAW_ROOT}/artifacts/schema/candidate.schema.json",
-                "encodingFormat": "application/schema+json",
-                "sha256": _sha256(REPO_ROOT / "artifacts" / "schema" / "candidate.schema.json"),
-            },
-            {
-                "@type": "cr:FileObject",
-                "@id": "result_schema_json",
-                "name": "result.schema.json",
-                "contentUrl": f"{GITHUB_RAW_ROOT}/artifacts/schema/result.schema.json",
-                "encodingFormat": "application/schema+json",
-                "sha256": _sha256(REPO_ROOT / "artifacts" / "schema" / "result.schema.json"),
-            },
-        ],
+        "includedInDataCatalog": {"@type": "DataCatalog", "name": "Anonymous review artifact"},
+        "distribution": _croissant_distribution(),
         "recordSet": [
             {
                 "@type": "cr:RecordSet",
                 "@id": "pebench_tasks",
                 "name": "PE-Bench task records",
                 "description": "One record per executable benchmark task.",
-                "data": {"@id": "task_records_jsonl"},
                 "key": {"@id": "pebench_tasks/task_id"},
-                "field": [
-                    _croissant_field("task_id", "sc:Text"),
-                    _croissant_field("bank", "sc:Text"),
-                    _croissant_field("topology", "sc:Text"),
-                    _croissant_field("difficulty_tier", "sc:Text"),
-                    _croissant_field("split", "sc:Text"),
-                    _croissant_field("natural_language_spec", "sc:Text"),
-                    _croissant_field("reference_design", "sc:Text"),
-                ],
+                "field": _croissant_task_fields(),
             }
         ],
         "prov:wasGeneratedBy": {
             "@type": "SoftwareApplication",
             "name": "PE-Bench artifact builder",
             "softwareVersion": summary["release_version"],
-            "url": "https://github.com/spongelovesorange/PE-Bench",
+            "url": ANONYMOUS_REVIEW_URL,
         },
         "prov:wasDerivedFrom": [
             "Anonymous author-curated task specifications",
-            "Bounded public component-catalog slices included in the artifact",
+            "Bounded component-catalog slices included in the artifact",
             "Feasible reference-design anchors included with each task card",
         ],
-        "rai:dataCollection": "Synthetic benchmark task cards authored for engineering evaluation; no personal data.",
+        "rai:dataCollection": (
+            "Synthetic benchmark task cards authored from converter-family templates under "
+            "`pebench/tasks/`, normalized by `scripts/build_dataset_artifacts.py`, and checked "
+            "by task-schema validators plus feasible reference-design validators. No personal data."
+        ),
         "rai:dataUseCases": "Evaluation of AI-assisted power-electronics design systems under PE-Bench criteria.",
         "rai:dataBiases": (
             "Tasks emphasize converter-design closure under the included benchmark families and component catalogs. "
@@ -350,8 +371,131 @@ def croissant_metadata(summary: dict[str, Any]) -> dict[str, Any]:
         ),
         "rai:hasSyntheticData": True,
         "rai:personalSensitiveInformation": "None.",
-        "rai:annotationPlatform": "Author-curated YAML task cards with feasible reference-design anchors.",
+        "rai:annotationPlatform": (
+            "Author-curated YAML task cards, deterministic artifact builders, bounded in-artifact "
+            "component catalogs, and feasible reference-design anchors used as witnesses rather than unique gold answers."
+        ),
     }
+
+
+def _croissant_context() -> dict[str, Any]:
+    return {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "arrayShape": "cr:arrayShape",
+        "citeAs": "cr:citeAs",
+        "column": "cr:column",
+        "conformsTo": "dct:conformsTo",
+        "containedIn": "cr:containedIn",
+        "cr": "http://mlcommons.org/croissant/",
+        "rai": "http://mlcommons.org/croissant/RAI/",
+        "prov": "http://www.w3.org/ns/prov#",
+        "data": {"@id": "cr:data", "@type": "@json"},
+        "dataType": {"@id": "cr:dataType", "@type": "@vocab"},
+        "dct": "http://purl.org/dc/terms/",
+        "description": {"@container": "@language"},
+        "equivalentProperty": "cr:equivalentProperty",
+        "examples": {"@id": "cr:examples", "@type": "@json"},
+        "extract": "cr:extract",
+        "field": "cr:field",
+        "fileProperty": "cr:fileProperty",
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "format": "cr:format",
+        "includes": "cr:includes",
+        "isArray": "cr:isArray",
+        "isLiveDataset": "cr:isLiveDataset",
+        "jsonPath": "cr:jsonPath",
+        "key": "cr:key",
+        "md5": "cr:md5",
+        "name": {"@container": "@language"},
+        "parentField": "cr:parentField",
+        "path": "cr:path",
+        "recordSet": "cr:recordSet",
+        "references": "cr:references",
+        "regex": "cr:regex",
+        "repeated": "cr:repeated",
+        "replace": "cr:replace",
+        "samplingRate": "cr:samplingRate",
+        "sc": "https://schema.org/",
+        "separator": "cr:separator",
+        "source": "cr:source",
+        "subField": "cr:subField",
+        "transform": "cr:transform",
+    }
+
+
+def _croissant_distribution() -> list[dict[str, Any]]:
+    return [
+        _croissant_file("task_records_csv", "artifacts/dataset/task_records.csv", "text/csv"),
+        _croissant_file("task_records_jsonl", "artifacts/dataset/task_records.jsonl", "application/jsonl"),
+        _croissant_file("task_inventory_csv", "artifacts/release/task_inventory.csv", "text/csv"),
+        _croissant_file("candidate_schema_json", "artifacts/schema/candidate.schema.json", "application/schema+json"),
+        _croissant_file("result_schema_json", "artifacts/schema/result.schema.json", "application/schema+json"),
+        _croissant_file("release_manifest_json", "artifacts/release/pebench_v1_manifest.json", "application/json"),
+        _croissant_file("frozen_evidence_manifest_json", "artifacts/evidence/frozen_v1/manifest.json", "application/json"),
+        _croissant_file("frozen_leaderboard_summary_csv", "artifacts/evidence/frozen_v1/leaderboard_summary.csv", "text/csv"),
+        _croissant_file("frozen_validation_summary_csv", "artifacts/evidence/frozen_v1/validation_summary.csv", "text/csv"),
+        _croissant_file("frozen_simulation_check_gap_csv", "artifacts/evidence/frozen_v1/simulation_check_gap.csv", "text/csv"),
+        _croissant_file("api_rerun_integrity_json", "artifacts/evidence/api_rerun_gpt4omini_20260506/integrity_report.json", "application/json"),
+        _croissant_file("api_rerun_task_results_csv", "artifacts/evidence/api_rerun_gpt4omini_20260506/task_results.csv", "text/csv"),
+        _croissant_file("component_catalogs_yaml", "assets/catalogs/components.yaml", "application/x-yaml"),
+        _croissant_file("flyback_component_catalog_yaml", "assets/catalogs/flyback_components.yaml", "application/x-yaml"),
+        _croissant_file("topology_component_catalog_yaml", "assets/catalogs/topology_components.yaml", "application/x-yaml"),
+        _croissant_file("inverter_component_catalog_yaml", "assets/catalogs/inverter_components.yaml", "application/x-yaml"),
+        _croissant_file("benchmark_card_md", "artifacts/cards/benchmark_card.md", "text/markdown"),
+        _croissant_file("evaluator_card_md", "artifacts/cards/evaluator_card.md", "text/markdown"),
+        _croissant_file("dataset_card_md", "docs/DATASET_CARD.md", "text/markdown"),
+        _croissant_file("responsible_ai_metadata_md", "docs/RESPONSIBLE_AI_METADATA.md", "text/markdown"),
+        _croissant_file("evidence_matrix_md", "artifacts/evidence/EVIDENCE_MATRIX.md", "text/markdown"),
+        _croissant_file("reviewer_smoke_test_doc_md", "artifacts/quickstart/REVIEWER_SMOKE_TEST.md", "text/markdown"),
+    ]
+
+
+def _croissant_file(identifier: str, relative_path: str, encoding_format: str) -> dict[str, Any]:
+    path = REPO_ROOT / relative_path
+    return {
+        "@type": "cr:FileObject",
+        "@id": identifier,
+        "name": Path(relative_path).name,
+        "contentUrl": relative_path,
+        "encodingFormat": encoding_format,
+        "sha256": _sha256(path),
+    }
+
+
+def _croissant_task_fields() -> list[dict[str, Any]]:
+    text_fields = [
+        "task_id",
+        "bank",
+        "topology",
+        "difficulty_tier",
+        "split",
+        "track",
+        "task_family",
+        "source",
+        "schema_version",
+        "task_path",
+        "natural_language_spec",
+        "input_domain",
+        "component_catalog_version",
+        "closure_gates",
+        "known_failure_modes",
+        "reference_design",
+    ]
+    float_fields = [
+        "input_min",
+        "input_max",
+        "output_voltage",
+        "output_current",
+        "output_power_w",
+        "efficiency_target_percent",
+        "ripple_or_quality_target",
+    ]
+    return [
+        *[_croissant_field(name, "sc:Text") for name in text_fields],
+        *[_croissant_field(name, "sc:Float") for name in float_fields],
+    ]
 
 
 def _croissant_field(name: str, data_type: str) -> dict[str, Any]:
@@ -361,8 +505,8 @@ def _croissant_field(name: str, data_type: str) -> dict[str, Any]:
         "name": name,
         "dataType": data_type,
         "source": {
-            "fileObject": {"@id": "task_records_jsonl"},
-            "extract": {"jsonPath": f"$.{name}"},
+            "fileObject": {"@id": "task_records_csv"},
+            "extract": {"column": name},
         },
     }
 
@@ -483,8 +627,10 @@ def _write_csv(path: Path, records: list[dict[str, Any]]) -> None:
         "split",
         "track",
         "task_family",
+        "source",
         "schema_version",
         "task_path",
+        "natural_language_spec",
         "input_min",
         "input_max",
         "input_domain",
@@ -494,13 +640,24 @@ def _write_csv(path: Path, records: list[dict[str, Any]]) -> None:
         "efficiency_target_percent",
         "ripple_or_quality_target",
         "component_catalog_version",
+        "closure_gates",
+        "known_failure_modes",
+        "reference_design",
     ]
     ensure_dir(path.parent)
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
         for record in records:
-            writer.writerow({field: record.get(field, "") for field in fieldnames})
+            writer.writerow({field: _csv_value(record.get(field, "")) for field in fieldnames})
+
+
+def _csv_value(value: Any) -> Any:
+    if value is None:
+        return ""
+    if isinstance(value, (list, dict)):
+        return json.dumps(value, sort_keys=True)
+    return value
 
 
 def _write_checksums(path: Path, files: list[Path]) -> None:

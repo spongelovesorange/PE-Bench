@@ -78,6 +78,8 @@ def _patterns() -> list[tuple[str, re.Pattern[str]]]:
         ("API key-like token", re.compile(r"sk-[A-Za-z0-9]{20,}")),
         ("absolute user path", re.compile(re.escape("/" + "Users" + "/"))),
         ("local username", re.compile("beau" + "locanana", re.IGNORECASE)),
+        ("non-anonymous GitHub account", re.compile("sponge" + "loves" + "orange", re.IGNORECASE)),
+        ("non-anonymous GitHub raw URL", re.compile(r"raw\.githubusercontent\.com/" + "sponge" + "loves" + "orange", re.IGNORECASE)),
         ("local source path", re.compile(re.escape("Downloads/" + "FlybackBench"))),
         ("legacy task-count wording", re.compile(rf"\b{legacy_count}[- ]tasks?\b|\b{legacy_count} released\b", re.IGNORECASE)),
         ("non-anonymous author name", re.compile("Shi" + r"\s+" + "Qiu", re.IGNORECASE)),

@@ -2,14 +2,67 @@
   "@context": {
     "@language": "en",
     "@vocab": "https://schema.org/",
+    "arrayShape": "cr:arrayShape",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "containedIn": "cr:containedIn",
     "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "description": {
+      "@container": "@language"
+    },
+    "equivalentProperty": "cr:equivalentProperty",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isArray": "cr:isArray",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "name": {
+      "@container": "@language"
+    },
+    "parentField": "cr:parentField",
+    "path": "cr:path",
     "prov": "http://www.w3.org/ns/prov#",
     "rai": "http://mlcommons.org/croissant/RAI/",
-    "sc": "https://schema.org/"
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
   },
   "@type": "sc:Dataset",
-  "codeRepository": "https://github.com/spongelovesorange/PE-Bench",
-  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "citeAs": "Anonymous PE-Bench Authors. PE-Bench: A Benchmark for Evaluating Agent-Based Power Electronics Design Systems. Anonymous review artifact, 2026.",
+  "codeRepository": "https://anonymous.4open.science/r/PE-Bench-ACFC/",
+  "conformsTo": [
+    "http://mlcommons.org/croissant/1.1",
+    "http://mlcommons.org/croissant/RAI/1.0"
+  ],
   "creator": {
     "@type": "Organization",
     "name": "Anonymous PE-Bench Authors"
@@ -18,25 +71,25 @@
   "description": "PE-Bench is a 78-task benchmark and evaluator artifact for AI-assisted power-electronics design across Buck, Boost, Buck-Boost, Flyback, and three-phase inverter tasks.",
   "distribution": [
     {
+      "@id": "task_records_csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/dataset/task_records.csv",
+      "encodingFormat": "text/csv",
+      "name": "task_records.csv",
+      "sha256": "e5f95e6d6c1e7b7053a71db64bdf800dc742bf4d27915b03fb35720e19584323"
+    },
+    {
       "@id": "task_records_jsonl",
       "@type": "cr:FileObject",
-      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/dataset/task_records.jsonl",
-      "encodingFormat": "application/x-jsonlines",
+      "contentUrl": "artifacts/dataset/task_records.jsonl",
+      "encodingFormat": "application/jsonl",
       "name": "task_records.jsonl",
       "sha256": "9478bc1a0e11e9c661762653133057a5c7e55d192e882650ced7644dd82fd081"
     },
     {
-      "@id": "task_records_csv",
-      "@type": "cr:FileObject",
-      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/dataset/task_records.csv",
-      "encodingFormat": "text/csv",
-      "name": "task_records.csv",
-      "sha256": "5c52cbcf68c6d6de3523adeb80685477970a065b7ede7b084124d1d95b81973b"
-    },
-    {
       "@id": "task_inventory_csv",
       "@type": "cr:FileObject",
-      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/release/task_inventory.csv",
+      "contentUrl": "artifacts/release/task_inventory.csv",
       "encodingFormat": "text/csv",
       "name": "task_inventory.csv",
       "sha256": "718e90a608e0ac74a4f65561bf5565adec49faab9cdbb63442d47595e1f28290"
@@ -44,7 +97,7 @@
     {
       "@id": "candidate_schema_json",
       "@type": "cr:FileObject",
-      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/schema/candidate.schema.json",
+      "contentUrl": "artifacts/schema/candidate.schema.json",
       "encodingFormat": "application/schema+json",
       "name": "candidate.schema.json",
       "sha256": "e7e729ce69692e11625211441de328a7f0d34036d2b225b8ca0ff922964dc43d"
@@ -52,15 +105,151 @@
     {
       "@id": "result_schema_json",
       "@type": "cr:FileObject",
-      "contentUrl": "https://raw.githubusercontent.com/spongelovesorange/PE-Bench/main/artifacts/schema/result.schema.json",
+      "contentUrl": "artifacts/schema/result.schema.json",
       "encodingFormat": "application/schema+json",
       "name": "result.schema.json",
       "sha256": "451f435154ffcf601ea7414b56b5cc80c709ccd76e3d92ec927cb0d22144423a"
+    },
+    {
+      "@id": "release_manifest_json",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/release/pebench_v1_manifest.json",
+      "encodingFormat": "application/json",
+      "name": "pebench_v1_manifest.json",
+      "sha256": "7d9036ff17cda24be22f0dc54390384bd6ac339c2cb9fa4c28a5f17657667f63"
+    },
+    {
+      "@id": "frozen_evidence_manifest_json",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/evidence/frozen_v1/manifest.json",
+      "encodingFormat": "application/json",
+      "name": "manifest.json",
+      "sha256": "541e1aa9c14ac7f5cc1863b8516fe5ac593ff1392855bf83698b65f2d0bf9105"
+    },
+    {
+      "@id": "frozen_leaderboard_summary_csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/evidence/frozen_v1/leaderboard_summary.csv",
+      "encodingFormat": "text/csv",
+      "name": "leaderboard_summary.csv",
+      "sha256": "e189deccb57ebc47e2d9a4e68d6c9e1b3f1d17a347e9eb9b4bd4d40fb2efc7bb"
+    },
+    {
+      "@id": "frozen_validation_summary_csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/evidence/frozen_v1/validation_summary.csv",
+      "encodingFormat": "text/csv",
+      "name": "validation_summary.csv",
+      "sha256": "0fd769acc81d13e563185fcfd86fe8091a7ec05e66ede5c3af594418df6d5a73"
+    },
+    {
+      "@id": "frozen_simulation_check_gap_csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/evidence/frozen_v1/simulation_check_gap.csv",
+      "encodingFormat": "text/csv",
+      "name": "simulation_check_gap.csv",
+      "sha256": "4cf516b91b6517c35d4551f4ceed9921418c4c4d988a1618c68f6ae489d6ab7f"
+    },
+    {
+      "@id": "api_rerun_integrity_json",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/evidence/api_rerun_gpt4omini_20260506/integrity_report.json",
+      "encodingFormat": "application/json",
+      "name": "integrity_report.json",
+      "sha256": "9203577680bf4e6e11ecb80889a8402ea918f186700a6e8dd076722cfd81a509"
+    },
+    {
+      "@id": "api_rerun_task_results_csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/evidence/api_rerun_gpt4omini_20260506/task_results.csv",
+      "encodingFormat": "text/csv",
+      "name": "task_results.csv",
+      "sha256": "3d93056ea38d3c4469dc56d920349b239ce31cd186f85258b1f82f41a60394d3"
+    },
+    {
+      "@id": "component_catalogs_yaml",
+      "@type": "cr:FileObject",
+      "contentUrl": "assets/catalogs/components.yaml",
+      "encodingFormat": "application/x-yaml",
+      "name": "components.yaml",
+      "sha256": "8edeae113223dcea24d4cdc304e6a0c065f586831a1c9b3c28d302f68754295a"
+    },
+    {
+      "@id": "flyback_component_catalog_yaml",
+      "@type": "cr:FileObject",
+      "contentUrl": "assets/catalogs/flyback_components.yaml",
+      "encodingFormat": "application/x-yaml",
+      "name": "flyback_components.yaml",
+      "sha256": "40c7c4b1a88a5eca92e8163126716f8a1489d0a792238fff6a90cf8280ec2153"
+    },
+    {
+      "@id": "topology_component_catalog_yaml",
+      "@type": "cr:FileObject",
+      "contentUrl": "assets/catalogs/topology_components.yaml",
+      "encodingFormat": "application/x-yaml",
+      "name": "topology_components.yaml",
+      "sha256": "c6d3ef1fbd2fe02eac138c2ed0722c9248e8efee38c9e3592dccac179295c001"
+    },
+    {
+      "@id": "inverter_component_catalog_yaml",
+      "@type": "cr:FileObject",
+      "contentUrl": "assets/catalogs/inverter_components.yaml",
+      "encodingFormat": "application/x-yaml",
+      "name": "inverter_components.yaml",
+      "sha256": "24aa4932073b27761ccb535ac39b13ff399cb3b8f4073a46c0fc399e40e515c0"
+    },
+    {
+      "@id": "benchmark_card_md",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/cards/benchmark_card.md",
+      "encodingFormat": "text/markdown",
+      "name": "benchmark_card.md",
+      "sha256": "badc1e359a6c8ff67c5b2dd9172329dc5a960dcc3a7beed51ec55e7ad8ed7c1a"
+    },
+    {
+      "@id": "evaluator_card_md",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/cards/evaluator_card.md",
+      "encodingFormat": "text/markdown",
+      "name": "evaluator_card.md",
+      "sha256": "b25acb27c12403b5f2810bf6497a6aeb2af8e577f389ac6f3dc5d5f360056d47"
+    },
+    {
+      "@id": "dataset_card_md",
+      "@type": "cr:FileObject",
+      "contentUrl": "docs/DATASET_CARD.md",
+      "encodingFormat": "text/markdown",
+      "name": "DATASET_CARD.md",
+      "sha256": "700b77c35026da043a754e25685ef641d5687da23ab42f14280b483c9d1af9a4"
+    },
+    {
+      "@id": "responsible_ai_metadata_md",
+      "@type": "cr:FileObject",
+      "contentUrl": "docs/RESPONSIBLE_AI_METADATA.md",
+      "encodingFormat": "text/markdown",
+      "name": "RESPONSIBLE_AI_METADATA.md",
+      "sha256": "8f598628f7d7aff9e35c1706ace9921c69b40a55925ea7ceee2ed8f16286c9c4"
+    },
+    {
+      "@id": "evidence_matrix_md",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/evidence/EVIDENCE_MATRIX.md",
+      "encodingFormat": "text/markdown",
+      "name": "EVIDENCE_MATRIX.md",
+      "sha256": "9446eb1a6059993ac21d06ad71c813897ce65657334d933367f9e9406d2d4890"
+    },
+    {
+      "@id": "reviewer_smoke_test_doc_md",
+      "@type": "cr:FileObject",
+      "contentUrl": "artifacts/quickstart/REVIEWER_SMOKE_TEST.md",
+      "encodingFormat": "text/markdown",
+      "name": "REVIEWER_SMOKE_TEST.md",
+      "sha256": "5b023518232618f5005fe82a9f968f8a16acb025f64b239040724e1b1d8fc407"
     }
   ],
   "includedInDataCatalog": {
     "@type": "DataCatalog",
-    "name": "GitHub anonymous review artifact"
+    "name": "Anonymous review artifact"
   },
   "isAccessibleForFree": true,
   "keywords": [
@@ -75,18 +264,18 @@
   "name": "PE-Bench",
   "prov:wasDerivedFrom": [
     "Anonymous author-curated task specifications",
-    "Bounded public component-catalog slices included in the artifact",
+    "Bounded component-catalog slices included in the artifact",
     "Feasible reference-design anchors included with each task card"
   ],
   "prov:wasGeneratedBy": {
     "@type": "SoftwareApplication",
     "name": "PE-Bench artifact builder",
     "softwareVersion": "pebench-v1.0-78task",
-    "url": "https://github.com/spongelovesorange/PE-Bench"
+    "url": "https://anonymous.4open.science/r/PE-Bench-ACFC/"
   },
-  "rai:annotationPlatform": "Author-curated YAML task cards with feasible reference-design anchors.",
+  "rai:annotationPlatform": "Author-curated YAML task cards, deterministic artifact builders, bounded in-artifact component catalogs, and feasible reference-design anchors used as witnesses rather than unique gold answers.",
   "rai:dataBiases": "Tasks emphasize converter-design closure under the included benchmark families and component catalogs. Results should not be interpreted as broad electrical-engineering competence outside these families.",
-  "rai:dataCollection": "Synthetic benchmark task cards authored for engineering evaluation; no personal data.",
+  "rai:dataCollection": "Synthetic benchmark task cards authored from converter-family templates under `pebench/tasks/`, normalized by `scripts/build_dataset_artifacts.py`, and checked by task-schema validators plus feasible reference-design validators. No personal data.",
   "rai:dataLimitations": "Not a hardware-certification dataset, production sign-off workflow, automated procurement system, or replacement for qualified engineering review.",
   "rai:dataSocialImpact": "The benchmark may improve auditability of AI-assisted engineering systems, but unsafe use could lead to over-trust in generated designs. Qualified human review remains required.",
   "rai:dataUseCases": "Evaluation of AI-assisted power-electronics design systems under PE-Bench criteria.",
@@ -96,9 +285,6 @@
     {
       "@id": "pebench_tasks",
       "@type": "cr:RecordSet",
-      "data": {
-        "@id": "task_records_jsonl"
-      },
       "description": "One record per executable benchmark task.",
       "field": [
         {
@@ -108,10 +294,10 @@
           "name": "task_id",
           "source": {
             "extract": {
-              "jsonPath": "$.task_id"
+              "column": "task_id"
             },
             "fileObject": {
-              "@id": "task_records_jsonl"
+              "@id": "task_records_csv"
             }
           }
         },
@@ -122,10 +308,10 @@
           "name": "bank",
           "source": {
             "extract": {
-              "jsonPath": "$.bank"
+              "column": "bank"
             },
             "fileObject": {
-              "@id": "task_records_jsonl"
+              "@id": "task_records_csv"
             }
           }
         },
@@ -136,10 +322,10 @@
           "name": "topology",
           "source": {
             "extract": {
-              "jsonPath": "$.topology"
+              "column": "topology"
             },
             "fileObject": {
-              "@id": "task_records_jsonl"
+              "@id": "task_records_csv"
             }
           }
         },
@@ -150,10 +336,10 @@
           "name": "difficulty_tier",
           "source": {
             "extract": {
-              "jsonPath": "$.difficulty_tier"
+              "column": "difficulty_tier"
             },
             "fileObject": {
-              "@id": "task_records_jsonl"
+              "@id": "task_records_csv"
             }
           }
         },
@@ -164,10 +350,80 @@
           "name": "split",
           "source": {
             "extract": {
-              "jsonPath": "$.split"
+              "column": "split"
             },
             "fileObject": {
-              "@id": "task_records_jsonl"
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/track",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "track",
+          "source": {
+            "extract": {
+              "column": "track"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/task_family",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "task_family",
+          "source": {
+            "extract": {
+              "column": "task_family"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/source",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "source",
+          "source": {
+            "extract": {
+              "column": "source"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/schema_version",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "schema_version",
+          "source": {
+            "extract": {
+              "column": "schema_version"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/task_path",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "task_path",
+          "source": {
+            "extract": {
+              "column": "task_path"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
             }
           }
         },
@@ -178,10 +434,66 @@
           "name": "natural_language_spec",
           "source": {
             "extract": {
-              "jsonPath": "$.natural_language_spec"
+              "column": "natural_language_spec"
             },
             "fileObject": {
-              "@id": "task_records_jsonl"
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/input_domain",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "input_domain",
+          "source": {
+            "extract": {
+              "column": "input_domain"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/component_catalog_version",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "component_catalog_version",
+          "source": {
+            "extract": {
+              "column": "component_catalog_version"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/closure_gates",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "closure_gates",
+          "source": {
+            "extract": {
+              "column": "closure_gates"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/known_failure_modes",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "name": "known_failure_modes",
+          "source": {
+            "extract": {
+              "column": "known_failure_modes"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
             }
           }
         },
@@ -192,10 +504,108 @@
           "name": "reference_design",
           "source": {
             "extract": {
-              "jsonPath": "$.reference_design"
+              "column": "reference_design"
             },
             "fileObject": {
-              "@id": "task_records_jsonl"
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/input_min",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "name": "input_min",
+          "source": {
+            "extract": {
+              "column": "input_min"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/input_max",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "name": "input_max",
+          "source": {
+            "extract": {
+              "column": "input_max"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/output_voltage",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "name": "output_voltage",
+          "source": {
+            "extract": {
+              "column": "output_voltage"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/output_current",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "name": "output_current",
+          "source": {
+            "extract": {
+              "column": "output_current"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/output_power_w",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "name": "output_power_w",
+          "source": {
+            "extract": {
+              "column": "output_power_w"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/efficiency_target_percent",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "name": "efficiency_target_percent",
+          "source": {
+            "extract": {
+              "column": "efficiency_target_percent"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
+            }
+          }
+        },
+        {
+          "@id": "pebench_tasks/ripple_or_quality_target",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "name": "ripple_or_quality_target",
+          "source": {
+            "extract": {
+              "column": "ripple_or_quality_target"
+            },
+            "fileObject": {
+              "@id": "task_records_csv"
             }
           }
         }
@@ -206,6 +616,7 @@
       "name": "PE-Bench task records"
     }
   ],
-  "url": "https://github.com/spongelovesorange/PE-Bench",
-  "version": "pebench-v1.0-78task"
+  "sdVersion": "pebench-v1.0-78task",
+  "url": "https://anonymous.4open.science/r/PE-Bench-ACFC/",
+  "version": "1.0.0"
 }

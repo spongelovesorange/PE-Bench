@@ -82,6 +82,8 @@ FORBIDDEN_TEXT_PATTERNS = [
     "/" + "Users/",
     "Documents/" + "New project",
     "Downloads/" + "FlybackBench",
+    "sponge" + "loves" + "orange",
+    "raw.githubusercontent.com/" + "sponge" + "loves" + "orange",
     "Shi " + "Qiu",
     "Shi_" + "QIU",
     "邱" + "释",

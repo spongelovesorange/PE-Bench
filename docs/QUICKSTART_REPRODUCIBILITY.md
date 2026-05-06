@@ -31,7 +31,7 @@ python scripts/build_paper_tables.py --evidence artifacts/evidence/frozen_v1 --c
 python scripts/validate_public_artifact.py
 ```
 
-For the linked GitHub repository, additionally run:
+For any linked anonymous repository or supplementary artifact, additionally run:
 
 ```bash
 python scripts/validate_public_artifact.py --check-git-history
