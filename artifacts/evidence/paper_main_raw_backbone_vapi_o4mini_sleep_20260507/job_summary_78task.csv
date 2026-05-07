@@ -1,0 +1,7 @@
+job_label,baseline_name,model_name,seed,variant,task_count,successes,vtsr,mean_score,is_complete_78task_job,evidence_level
+direct_prompting__o4-mini__seed1__full,direct_prompting,o4-mini,1,full,78,0,0.0,0.0,True,paper_main_raw_api_evidence
+direct_prompting__o4-mini__seed2__full,direct_prompting,o4-mini,2,full,78,0,0.0,0.0,True,paper_main_raw_api_evidence
+direct_prompting__o4-mini__seed3__full,direct_prompting,o4-mini,3,full,78,0,0.0,0.0,True,paper_main_raw_api_evidence
+reference_agent__o4-mini__seed1__full,reference_agent,o4-mini,1,full,78,52,0.666667,92.457051,True,paper_main_raw_api_evidence
+reference_agent__o4-mini__seed2__full,reference_agent,o4-mini,2,full,78,52,0.666667,92.588974,True,paper_main_raw_api_evidence
+reference_agent__o4-mini__seed3__full,reference_agent,o4-mini,3,full,78,54,0.692308,92.330641,True,paper_main_raw_api_evidence

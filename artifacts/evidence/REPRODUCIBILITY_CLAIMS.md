@@ -64,11 +64,22 @@ python scripts/freeze_api_run_records.py --run-root results/final78_api_runs/<ru
 python scripts/promote_api_run_evidence.py --run-root results/final78_api_runs/<run_name>
 ```
 
-## Current Included Rerun
+## Current Included Reruns
 
-`artifacts/evidence/api_rerun_gpt4omini_20260506` contains a sanitized complete 78-task `gpt-4o-mini` rerun summary. It validates the long-run experiment pipeline, but it is not the source for the manuscript leaderboard because the backbone/provider setting differs from the manuscript records.
+`artifacts/evidence/evidence_run_index.csv` and `artifacts/evidence/evidence_run_index.json` are the reviewer-facing index for all included evidence bundles.
 
-Additional promoted reruns may appear under `artifacts/evidence/paper_main_raw_*`. Reviewers should read each directory's `manifest.json`, `promotion_decision.json`, and `paper_alignment_report.json` to determine whether that run is main-table evidence or independent rerun evidence.
+The included complete API reruns are:
+
+| Evidence directory | Model | Profile | Jobs | Task-level records | Failed jobs | Paper-main source |
+| --- | --- | --- | --- | --- | --- | --- |
+| `artifacts/evidence/paper_main_raw_paper_main_vapi_gpt41mini_sleep_20260507` | `gpt-4.1-mini` | main | 24/24 | 1872 | 0 | No |
+| `artifacts/evidence/paper_main_raw_paper_main_vapi_gpt4o_sleep_20260507` | `gpt-4o` | main | 24/24 | 1872 | 0 | No |
+| `artifacts/evidence/paper_main_raw_paper_main_vapi_o3mini_sleep_20260507` | `o3-mini` | main | 24/24 | 1872 | 0 | No |
+| `artifacts/evidence/paper_main_raw_backbone_vapi_gpt41_sleep_20260507` | `gpt-4.1` | backbone | 6/6 | 468 | 0 | No |
+| `artifacts/evidence/paper_main_raw_backbone_vapi_o4mini_sleep_20260507` | `o4-mini` | backbone | 6/6 | 468 | 0 | No |
+| `artifacts/evidence/api_rerun_gpt4omini_20260506` | `gpt-4o-mini` | main plus ablations | 33/33 | 2574 | 0 | No |
+
+These runs validate the long-run experiment pipeline and provide task-level audit records, but they are not the source for the manuscript leaderboard. Their promotion gates record model/provider drift relative to `artifacts/evidence/frozen_v1`; therefore they remain `independent_api_rerun_summary` evidence. Reviewers should read each directory's `manifest.json`, `promotion_decision.json`, and `paper_alignment_report.json` before using a rerun for any paper-facing claim.
 
 ## Explicit Limitations
 

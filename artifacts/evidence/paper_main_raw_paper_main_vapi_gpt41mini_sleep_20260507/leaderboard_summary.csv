@@ -1,0 +1,9 @@
+baseline_name,model_name,variant,seed_count,complete_seed_count,task_records,vtsr_mean,vtsr_std,partial,pass_at_3,unsupported_values_percent,invalid_bom_percent,sim_calls,mean_score,evidence_level
+direct_prompting,gpt-4.1-mini,full,3,3,234,0.029915,0.007402,0.639541,0.051282,87.606838,67.094017,1.0,63.954103,paper_main_raw_api_evidence
+generic_two_role_mas,gpt-4.1-mini,full,3,3,234,0.017094,0.007402,0.637949,0.038462,90.17094,67.094017,1.0,63.794915,paper_main_raw_api_evidence
+pe_gpt_style,gpt-4.1-mini,full,3,3,234,0.021368,0.019584,0.635835,0.038462,88.034188,65.384615,1.0,63.583462,paper_main_raw_api_evidence
+reference_agent,gpt-4.1-mini,full,3,3,234,0.705128,0.025641,0.92541,0.846154,6.837607,2.564103,1.846154,92.540983,paper_main_raw_api_evidence
+single_agent_retry,gpt-4.1-mini,full,3,3,234,0.034188,0.007402,0.625715,0.038462,85.897436,69.230769,1.0,62.571453,paper_main_raw_api_evidence
+single_agent_same_tools,gpt-4.1-mini,full,3,3,234,0.042735,0.007402,0.628435,0.051282,87.179487,67.094017,1.0,62.843461,paper_main_raw_api_evidence
+structured_output_only,gpt-4.1-mini,full,3,3,234,0.038462,0.012821,0.630481,0.051282,88.034188,68.803419,1.0,63.04812,paper_main_raw_api_evidence
+text_only_self_refine,gpt-4.1-mini,full,3,3,234,0.025641,0.012821,0.625491,0.038462,88.034188,69.65812,1.0,62.549103,paper_main_raw_api_evidence

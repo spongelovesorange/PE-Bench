@@ -1,0 +1,21 @@
+{
+  "api_key_recorded": false,
+  "complete": true,
+  "completed_78task_jobs": 24,
+  "created_at_utc": "2026-05-06T23:29:04+00:00",
+  "done_marker_count": 24,
+  "evidence_level": "paper_main_raw_api_evidence",
+  "expected_job_count": 24,
+  "expected_task_results_if_complete": 1872,
+  "failed_marker_count": 0,
+  "notes": [
+    "Raw candidate and task-result JSON files remain under raw_records/.",
+    "This freeze step records summaries and checksums; it does not store API credentials.",
+    "If runner_state is not completed, rerun this script after the API run finishes."
+  ],
+  "observed_job_count": 24,
+  "observed_suite_count": 72,
+  "run_name": "paper_main_vapi_gpt4o_sleep_20260507",
+  "runner_state": "completed",
+  "task_result_count": 1872
+}

@@ -110,9 +110,13 @@ Reviewer-readable generated tables are written under `artifacts/reproduced_table
 ## Evidence Levels
 
 - `artifacts/evidence/frozen_v1`: frozen manuscript summary records used to reproduce the paper-facing tables.
-- `artifacts/evidence/api_rerun_gpt4omini_20260506`: sanitized complete `gpt-4o-mini` API rerun summary used as secondary pipeline evidence, not as the manuscript leaderboard source.
+- `artifacts/evidence/evidence_run_index.csv`: machine-readable index of all included evidence bundles.
+- `artifacts/evidence/paper_main_raw_paper_main_vapi_gpt41mini_sleep_20260507`: complete 78-task `gpt-4.1-mini` main-profile API rerun summary.
+- `artifacts/evidence/paper_main_raw_paper_main_vapi_gpt4o_sleep_20260507`: complete 78-task `gpt-4o` main-profile API rerun summary.
+- `artifacts/evidence/paper_main_raw_paper_main_vapi_o3mini_sleep_20260507`: complete 78-task `o3-mini` main-profile API rerun summary.
+- `artifacts/evidence/api_rerun_gpt4omini_20260506`: complete `gpt-4o-mini` API rerun summary used as secondary pipeline evidence.
 
-The artifact separates summary manuscript evidence from actual rerun summaries so reviewers can audit what each file is allowed to support.
+The artifact separates summary manuscript evidence from actual rerun summaries so reviewers can audit what each file is allowed to support. Current API reruns completed without failed jobs and include sanitized task-level JSONL summaries, but their paper-alignment gates did not pass, so they remain independent rerun evidence and do not replace `frozen_v1`.
 
 ## Run and Freeze Full API Evidence
 

@@ -9,6 +9,7 @@ PE-[GM][AP][ST]/.venv/
 *.pyc
 .DS_Store
 paper/
+PE_Bench.pdf
 *.aux
 *.bbl
 *.blg

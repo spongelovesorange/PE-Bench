@@ -1,0 +1,12 @@
+{
+  "actual_leaderboard": "artifacts/evidence/paper_main_raw_paper_main_vapi_o3mini_sleep_20260507/leaderboard_summary.csv",
+  "alignment_within_tolerance": false,
+  "interpretation": "Actual raw evidence should be treated as a rerun/secondary audit unless the manuscript numbers are updated.",
+  "max_abs_delta": 86.4,
+  "missing_code_ids": [],
+  "paper_leaderboard": "artifacts/evidence/frozen_v1/leaderboard_summary.csv",
+  "reason": "alignment gate failed; promoted as independent rerun evidence so stochastic/provider drift does not replace the frozen manuscript records",
+  "requested_for_main_paper_tables": true,
+  "tolerance": 0.035,
+  "used_for_main_paper_tables": false
+}
