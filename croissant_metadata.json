@@ -116,7 +116,7 @@
       "contentUrl": "artifacts/release/pebench_v1_manifest.json",
       "encodingFormat": "application/json",
       "name": "pebench_v1_manifest.json",
-      "sha256": "7d9036ff17cda24be22f0dc54390384bd6ac339c2cb9fa4c28a5f17657667f63"
+      "sha256": "159d4479b991844f5b34868a62eae4461cd4f2f642feb10d7d30082f77e18c3b"
     },
     {
       "@id": "frozen_evidence_manifest_json",
@@ -199,52 +199,20 @@
       "sha256": "24aa4932073b27761ccb535ac39b13ff399cb3b8f4073a46c0fc399e40e515c0"
     },
     {
-      "@id": "benchmark_card_md",
+      "@id": "readme_md",
       "@type": "cr:FileObject",
-      "contentUrl": "artifacts/cards/benchmark_card.md",
+      "contentUrl": "README.md",
       "encodingFormat": "text/markdown",
-      "name": "benchmark_card.md",
-      "sha256": "badc1e359a6c8ff67c5b2dd9172329dc5a960dcc3a7beed51ec55e7ad8ed7c1a"
+      "name": "README.md",
+      "sha256": "b77f6a731b3d03f72fb92bfb4f527ca06563e3335af5a7b8ec25862bd5b53529"
     },
     {
-      "@id": "evaluator_card_md",
+      "@id": "license_txt",
       "@type": "cr:FileObject",
-      "contentUrl": "artifacts/cards/evaluator_card.md",
-      "encodingFormat": "text/markdown",
-      "name": "evaluator_card.md",
-      "sha256": "b25acb27c12403b5f2810bf6497a6aeb2af8e577f389ac6f3dc5d5f360056d47"
-    },
-    {
-      "@id": "dataset_card_md",
-      "@type": "cr:FileObject",
-      "contentUrl": "docs/DATASET_CARD.md",
-      "encodingFormat": "text/markdown",
-      "name": "DATASET_CARD.md",
-      "sha256": "700b77c35026da043a754e25685ef641d5687da23ab42f14280b483c9d1af9a4"
-    },
-    {
-      "@id": "responsible_ai_metadata_md",
-      "@type": "cr:FileObject",
-      "contentUrl": "docs/RESPONSIBLE_AI_METADATA.md",
-      "encodingFormat": "text/markdown",
-      "name": "RESPONSIBLE_AI_METADATA.md",
-      "sha256": "8f598628f7d7aff9e35c1706ace9921c69b40a55925ea7ceee2ed8f16286c9c4"
-    },
-    {
-      "@id": "evidence_matrix_md",
-      "@type": "cr:FileObject",
-      "contentUrl": "artifacts/evidence/EVIDENCE_MATRIX.md",
-      "encodingFormat": "text/markdown",
-      "name": "EVIDENCE_MATRIX.md",
-      "sha256": "9446eb1a6059993ac21d06ad71c813897ce65657334d933367f9e9406d2d4890"
-    },
-    {
-      "@id": "reviewer_smoke_test_doc_md",
-      "@type": "cr:FileObject",
-      "contentUrl": "artifacts/quickstart/REVIEWER_SMOKE_TEST.md",
-      "encodingFormat": "text/markdown",
-      "name": "REVIEWER_SMOKE_TEST.md",
-      "sha256": "5b023518232618f5005fe82a9f968f8a16acb025f64b239040724e1b1d8fc407"
+      "contentUrl": "LICENSE",
+      "encodingFormat": "text/plain",
+      "name": "LICENSE",
+      "sha256": "cfa9f6d1ecf1a517b7790e4e11ae5521c8ceb0eb49cd78ef247c7cc14a4baf85"
     }
   ],
   "includedInDataCatalog": {
@@ -275,7 +243,7 @@
   },
   "rai:annotationPlatform": "Author-curated YAML task cards, deterministic artifact builders, bounded in-artifact component catalogs, and feasible reference-design anchors used as witnesses rather than unique gold answers.",
   "rai:dataBiases": "Tasks emphasize converter-design closure under the included benchmark families and component catalogs. Results should not be interpreted as broad electrical-engineering competence outside these families.",
-  "rai:dataCollection": "Synthetic benchmark task cards authored from converter-family templates under `pebench/tasks/`, normalized by `scripts/build_dataset_artifacts.py`, and checked by task-schema validators plus feasible reference-design validators. No personal data.",
+  "rai:dataCollection": "Synthetic benchmark task cards authored from converter-family templates under `pebench/tasks/`, normalized by `pebench/_commands/build_dataset_artifacts.py`, and checked by task-schema validators plus feasible reference-design validators. No personal data.",
   "rai:dataLimitations": "Not a hardware-certification dataset, production sign-off workflow, automated procurement system, or replacement for qualified engineering review.",
   "rai:dataSocialImpact": "The benchmark may improve auditability of AI-assisted engineering systems, but unsafe use could lead to over-trust in generated designs. Qualified human review remains required.",
   "rai:dataUseCases": "Evaluation of AI-assisted power-electronics design systems under PE-Bench criteria.",

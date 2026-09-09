@@ -22,12 +22,11 @@
       "Flyback",
       "Three-phase inverter"
     ],
-    "note": "This manifest covers the reviewer-facing code, task artifact, and summary-level frozen manuscript records. Full raw API reruns can replace the evidence bundle without changing the task contract.",
+    "note": "This manifest covers the reviewer-facing code, task artifact, and summary-level frozen manuscript records. Included API reruns remain independent evidence because their paper-alignment gates did not pass.",
     "primary_metric": "verifiable task success rate (VTSR)",
     "task_total": 78
   },
   "project": {
-    "legacy_package_shim": "flybackbench",
     "name": "PE-Bench",
     "python_package": "pebench",
     "role": "benchmark and evaluator artifact for AI-assisted power-electronics design"
@@ -37,36 +36,27 @@
     "checksums": "artifacts/release/checksums.sha256",
     "croissant_metadata": "croissant_metadata.json",
     "dataset_summary": "artifacts/dataset/dataset_summary.json",
-    "evidence_matrix": "artifacts/evidence/EVIDENCE_MATRIX.md",
+    "documentation": "README.md",
     "frozen_evidence_manifest": "artifacts/evidence/frozen_v1/manifest.json",
+    "license": "LICENSE",
     "manifest": "artifacts/release/pebench_v1_manifest.json",
-    "paper_alignment": "artifacts/release/paper_alignment.md",
     "reproduced_tables_manifest": "artifacts/reproduced_tables/manifest.json",
     "result_schema": "artifacts/schema/result.schema.json",
-    "reviewer_smoke_test": "artifacts/quickstart/REVIEWER_SMOKE_TEST.md",
-    "task_inventory_csv": "artifacts/release/task_inventory.csv",
-    "task_inventory_markdown": "artifacts/release/task_inventory.md"
+    "task_inventory_csv": "artifacts/release/task_inventory.csv"
   },
   "release_version": "pebench-v1.0-78task",
   "reviewer_commands": [
-    "python scripts/reviewer_smoke_test.py",
-    "python scripts/build_release_artifacts.py --check",
-    "python scripts/build_dataset_artifacts.py --check",
-    "python scripts/build_paper_tables.py --evidence artifacts/evidence/frozen_v1 --check",
-    "python scripts/validate_public_artifact.py",
-    "python scripts/validate_tasks.py",
-    "python scripts/validate_topology_full_tasks.py",
-    "python scripts/validate_inverter_tasks.py",
-    "python scripts/validate_reference_designs.py",
-    "python scripts/reproduce_paper_tables.py --evidence artifacts/evidence/frozen_v1"
+    "python -m pebench check",
+    "python -m pebench tables",
+    "python -m pebench export"
   ],
   "source_layout": {
     "artifact_output": "artifacts/",
     "baseline_adapters": "pebench/baselines/",
     "catalogs": "assets/catalogs/",
-    "docs": "docs/",
+    "commands": "pebench/_commands/",
+    "documentation": "README.md",
     "evaluator": "pebench/evaluator/",
-    "scripts": "scripts/",
     "tasks": {
       "flyback": "pebench/tasks/flyback",
       "three_phase_inverter": "pebench/tasks/inverter",

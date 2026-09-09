@@ -10,8 +10,8 @@ from pebench.adapters.registry import BASELINE_METADATA, get_baseline, get_basel
 from pebench.evaluator.core import evaluate_candidate
 from pebench.tasks.schema import iter_task_files, load_task
 from pebench.utils.paths import DEFAULT_TASK_DIR
-from scripts.build_literature_provenance import main as build_provenance_main
-from scripts.run_suite import run_task_with_baseline
+from pebench._commands.build_literature_provenance import main as build_provenance_main
+from pebench._commands.run_suite import run_task_with_baseline
 
 
 def test_baseline_registry_metadata_covers_all_dev_v2_baselines() -> None:
@@ -70,7 +70,7 @@ def test_single_agent_retry_tracks_attempt_history(monkeypatch) -> None:
             },
         }
 
-    monkeypatch.setattr("scripts.run_suite.evaluate_candidate", fake_evaluate_candidate)
+    monkeypatch.setattr("pebench._commands.run_suite.evaluate_candidate", fake_evaluate_candidate)
 
     candidate, result, feedback_history = run_task_with_baseline(
         baseline=baseline,

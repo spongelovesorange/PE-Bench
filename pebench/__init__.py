@@ -1,4 +1,4 @@
-"""PE-Bench benchmark scaffold."""
+"""Tasks and evaluators for evidence-based power-electronics design."""
 
 __all__ = ["__version__"]
 

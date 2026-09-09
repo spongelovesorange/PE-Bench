@@ -73,7 +73,6 @@ def build_release_manifest() -> dict[str, Any]:
         "project": {
             "name": "PE-Bench",
             "python_package": "pebench",
-            "legacy_package_shim": "flybackbench",
             "role": "benchmark and evaluator artifact for AI-assisted power-electronics design",
         },
         "paper_alignment": {
@@ -83,7 +82,7 @@ def build_release_manifest() -> dict[str, Any]:
             "primary_metric": "verifiable task success rate (VTSR)",
             "experiments_included": True,
             "evidence_level": "frozen manuscript summary records",
-            "note": "This manifest covers the reviewer-facing code, task artifact, and summary-level frozen manuscript records. Full raw API reruns can replace the evidence bundle without changing the task contract.",
+            "note": "This manifest covers the reviewer-facing code, task artifact, and summary-level frozen manuscript records. Included API reruns remain independent evidence because their paper-alignment gates did not pass.",
         },
         "task_counts": {
             "by_topology": topology_counts,
@@ -101,36 +100,27 @@ def build_release_manifest() -> dict[str, Any]:
             "evaluator": "pebench/evaluator/",
             "baseline_adapters": "pebench/baselines/",
             "catalogs": "assets/catalogs/",
-            "scripts": "scripts/",
-            "docs": "docs/",
+            "commands": "pebench/_commands/",
+            "documentation": "README.md",
             "artifact_output": "artifacts/",
         },
         "reviewer_commands": [
-            "python scripts/reviewer_smoke_test.py",
-            "python scripts/build_release_artifacts.py --check",
-            "python scripts/build_dataset_artifacts.py --check",
-            "python scripts/build_paper_tables.py --evidence artifacts/evidence/frozen_v1 --check",
-            "python scripts/validate_public_artifact.py",
-            "python scripts/validate_tasks.py",
-            "python scripts/validate_topology_full_tasks.py",
-            "python scripts/validate_inverter_tasks.py",
-            "python scripts/validate_reference_designs.py",
-            "python scripts/reproduce_paper_tables.py --evidence artifacts/evidence/frozen_v1",
+            "python -m pebench check",
+            "python -m pebench tables",
+            "python -m pebench export",
         ],
         "release_files": {
             "manifest": "artifacts/release/pebench_v1_manifest.json",
             "task_inventory_csv": "artifacts/release/task_inventory.csv",
-            "task_inventory_markdown": "artifacts/release/task_inventory.md",
             "checksums": "artifacts/release/checksums.sha256",
             "candidate_schema": "artifacts/schema/candidate.schema.json",
             "result_schema": "artifacts/schema/result.schema.json",
-            "reviewer_smoke_test": "artifacts/quickstart/REVIEWER_SMOKE_TEST.md",
-            "paper_alignment": "artifacts/release/paper_alignment.md",
             "frozen_evidence_manifest": "artifacts/evidence/frozen_v1/manifest.json",
             "dataset_summary": "artifacts/dataset/dataset_summary.json",
             "croissant_metadata": "croissant_metadata.json",
+            "documentation": "README.md",
+            "license": "LICENSE",
             "reproduced_tables_manifest": "artifacts/reproduced_tables/manifest.json",
-            "evidence_matrix": "artifacts/evidence/EVIDENCE_MATRIX.md",
         },
         "non_use": {
             "hardware_certification": False,
@@ -153,26 +143,16 @@ def write_release_artifacts(output_root: str | Path | None = None) -> dict[str, 
     paths = {
         "manifest": root / "release" / "pebench_v1_manifest.json",
         "inventory_csv": root / "release" / "task_inventory.csv",
-        "inventory_md": root / "release" / "task_inventory.md",
         "checksums": root / "release" / "checksums.sha256",
         "candidate_schema": root / "schema" / "candidate.schema.json",
         "result_schema": root / "schema" / "result.schema.json",
-        "smoke_test_doc": root / "quickstart" / "REVIEWER_SMOKE_TEST.md",
-        "benchmark_card": root / "cards" / "benchmark_card.md",
-        "evaluator_card": root / "cards" / "evaluator_card.md",
-        "paper_alignment": root / "release" / "paper_alignment.md",
     }
 
     dump_json(manifest, paths["manifest"])
     dump_json(candidate_schema(), paths["candidate_schema"])
     dump_json(result_schema(), paths["result_schema"])
     _write_inventory_csv(paths["inventory_csv"], inventory)
-    _write_inventory_markdown(paths["inventory_md"], inventory, manifest)
     _write_checksums(paths["checksums"], [Path(row["path"]) for row in inventory])
-    _write_text(paths["smoke_test_doc"], _smoke_test_markdown())
-    _write_text(paths["benchmark_card"], _benchmark_card_markdown(manifest))
-    _write_text(paths["evaluator_card"], _evaluator_card_markdown())
-    _write_text(paths["paper_alignment"], _paper_alignment_markdown(manifest))
     return paths
 
 
@@ -191,14 +171,9 @@ def validate_release_artifacts(output_root: str | Path | None = None) -> list[st
     required_files = [
         root / "release" / "pebench_v1_manifest.json",
         root / "release" / "task_inventory.csv",
-        root / "release" / "task_inventory.md",
         root / "release" / "checksums.sha256",
         root / "schema" / "candidate.schema.json",
         root / "schema" / "result.schema.json",
-        root / "quickstart" / "REVIEWER_SMOKE_TEST.md",
-        root / "cards" / "benchmark_card.md",
-        root / "cards" / "evaluator_card.md",
-        root / "release" / "paper_alignment.md",
         root / "evidence" / "frozen_v1" / "manifest.json",
         root / "evidence" / "frozen_v1" / "checksums.sha256",
     ]
@@ -356,50 +331,6 @@ def _write_inventory_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
-def _write_inventory_markdown(path: Path, rows: list[dict[str, Any]], manifest: dict[str, Any]) -> None:
-    counts = manifest["task_counts"]
-    lines = [
-        "# PE-Bench v1 Task Inventory",
-        "",
-        f"Release: `{manifest['release_version']}`",
-        "",
-        f"Total tasks: **{len(rows)}**",
-        "",
-        "## Topology Counts",
-        "",
-        "| Topology | Count |",
-        "| --- | ---: |",
-    ]
-    for topology, count in counts["by_topology"].items():
-        lines.append(f"| {topology} | {count} |")
-    lines.extend(
-        [
-            "",
-            "## Difficulty Counts",
-            "",
-            "| Difficulty | Count |",
-            "| --- | ---: |",
-        ]
-    )
-    for difficulty, count in counts["by_difficulty"].items():
-        lines.append(f"| {difficulty} | {count} |")
-    lines.extend(
-        [
-            "",
-            "## Task Rows",
-            "",
-            "| Task ID | Bank | Topology | Difficulty | Split | Path |",
-            "| --- | --- | --- | --- | --- | --- |",
-        ]
-    )
-    for row in rows:
-        lines.append(
-            f"| `{row['task_id']}` | {row['bank']} | {row['topology']} | "
-            f"{row['difficulty_tier']} | {row['split']} | `{row['path']}` |"
-        )
-    _write_text(path, "\n".join(lines) + "\n")
-
-
 def _write_checksums(path: Path, relative_paths: list[Path]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = []
@@ -431,93 +362,6 @@ def _sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
-
-
-def _benchmark_card_markdown(manifest: dict[str, Any]) -> str:
-    return "\n".join(
-        [
-            "# Benchmark Card: PE-Bench v1",
-            "",
-            "PE-Bench evaluates whether AI-assisted power-electronics design outputs are internally consistent across requirements, converter topology, equations, components, safety margins, simulation or formula-backed metrics, reported claims, and human-review decisions.",
-            "",
-            f"Task count: {manifest['paper_alignment']['task_total']} across Buck, Boost, Buck-Boost, Flyback, and Three-phase inverter families.",
-            "",
-            "Primary metric: VTSR, a conservative binary pass requiring all required checks to pass.",
-            "",
-            "Non-use: PE-Bench is not hardware certification, regulatory approval, production sign-off, or a replacement for qualified engineering review.",
-            "",
-        ]
-    )
-
-
-def _evaluator_card_markdown() -> str:
-    return "\n".join(
-        [
-            "# Evaluator Card: PE-Bench v1",
-            "",
-            "Inputs: task YAML, candidate JSON, bounded component catalog slice, simulator configuration, and run metadata.",
-            "",
-            "Checks: schema closure, requirement grounding, topology equations, component grounding, derating margins, reported-value consistency, simulator/formula metrics, protection behavior where applicable, and human-review or escalation behavior.",
-            "",
-            "Outputs: pass/fail, score_total, sub_scores, constraint_violations, simulation_metrics, failure_tags, failure_groups, aggregate_scores, execution_log, and runtime_stats.",
-            "",
-            "Known abstractions: formula stubs are CI-safe approximations; full live simulation requires a local circuit-simulation backend.",
-            "",
-        ]
-    )
-
-
-def _smoke_test_markdown() -> str:
-    return "\n".join(
-        [
-            "# Reviewer Smoke Test",
-            "",
-            "This smoke test validates the task bank, evaluator contracts, package imports, and release manifest without running expensive LLM or live simulator experiments.",
-            "",
-            "```bash",
-            "python scripts/reviewer_smoke_test.py",
-            "```",
-            "",
-            "Expected checks:",
-            "",
-            "- 30 Flyback tasks parse.",
-            "- 36 Buck/Boost/Buck-Boost Topology Full tasks parse.",
-            "- 12 Three-phase inverter tasks parse.",
-            "- Release artifacts build and validate.",
-            "- Dataset exports and Croissant metadata build and validate.",
-            "- Reproduced Markdown paper tables build and validate.",
-            "- Public artifact anonymization and secret-leak checks pass.",
-            "- Reference feasibility candidates evaluate on every released task.",
-            "- Frozen manuscript summary records reproduce the paper-facing tables without API access.",
-            "",
-        ]
-    )
-
-
-def _paper_alignment_markdown(manifest: dict[str, Any]) -> str:
-    counts = manifest["task_counts"]
-    lines = [
-        "# Paper Alignment Checklist",
-        "",
-        "This file maps the main paper-facing artifact claims to concrete files and commands.",
-        "",
-        "| Paper-facing claim | Artifact support | Status |",
-        "| --- | --- | --- |",
-        f"| 78 executable tasks | `artifacts/release/task_inventory.csv`; topology counts `{counts['by_topology']}` | Supported |",
-        "| 12 Buck, 12 Boost, 12 Buck-Boost, 30 Flyback, 12 Three-phase inverter | `artifacts/release/pebench_v1_manifest.json` | Supported |",
-        "| Required-field checks 78/78 | `python scripts/reviewer_smoke_test.py`; `python scripts/validate_tasks.py`; `python scripts/validate_topology_full_tasks.py`; `python scripts/validate_inverter_tasks.py` | Supported |",
-        "| Feasible-reference checks 78/78 | `python scripts/validate_reference_designs.py` | Supported |",
-        "| Candidate/result schema is machine-readable | `artifacts/schema/candidate.schema.json`; `artifacts/schema/result.schema.json` | Supported |",
-        "| Dataset metadata is indexable | `croissant_metadata.json`; `docs/DATASET_CARD.md`; `artifacts/dataset/task_records.jsonl` | Supported |",
-        "| Anonymous release | `python scripts/export_anonymous_artifact.py --check` | Supported |",
-        "| Frozen final leaderboard and figure reproduction | `python scripts/reproduce_paper_tables.py --evidence artifacts/evidence/frozen_v1`; `python scripts/build_paper_tables.py --evidence artifacts/evidence/frozen_v1 --check` | Summary records included |",
-        "| Faulty-design, independent-valid-design, leakage, and held-out validation logs | `artifacts/evidence/frozen_v1/validation_summary.csv` | Summary records included; raw trace export should replace before camera-ready if available |",
-        "| Completed API rerun pipeline evidence | `artifacts/evidence/api_rerun_gpt4omini_20260506/integrity_report.json` | Secondary evidence included; not used for manuscript leaderboard |",
-        "",
-        "The code artifact is sufficient for task/evaluator/release-contract inspection. The frozen evidence bundle is summary-level and intentionally anonymous; replace it with raw sanitized run records after a full rerun when time permits.",
-        "",
-    ]
-    return "\n".join(lines)
 
 
 def _write_text(path: Path, text: str) -> None:

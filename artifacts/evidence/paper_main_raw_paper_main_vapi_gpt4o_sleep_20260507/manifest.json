@@ -4,7 +4,6 @@
   "evidence_kind": "independent_api_rerun_summary",
   "evidence_level": "independent_api_rerun_summary",
   "files": [
-    "README.md",
     "ablation_summary.csv",
     "checksums.sha256",
     "integrity_report.json",
